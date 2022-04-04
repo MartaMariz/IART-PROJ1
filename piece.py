@@ -21,23 +21,8 @@ class Piece:
     def printAttack(self):
         for l in range (len(self._attack)):
                 print( self._attack[l])
-    
 
-
-class Tower(Piece):
-    def __init__(self, col, line, totcol, totline):
-        super().__init__(col, line, totcol, totline)
-        for i in range(self._totline):
-            self._attack.append((i, self._col)) 
-
-        for i in range(self._totcol):
-            self._attack.append((self._line, i)) 
-
-
-
-class Bishop(Piece):
-    def __init__(self, col, line, totcol, totline):
-        super().__init__(col, line, totcol, totline)
+    def diagonalAttack(self):
         xnyn = True
         xnyp = True
         xpyn = True
@@ -58,10 +43,100 @@ class Bishop(Piece):
             else : xpyp = False 
             i += 1
 
+    def perpendicularAttack(self):
+        for i in range(self._totline):
+            if (i != self._line):
+                self._attack.append((i, self._col)) 
+
+        for i in range(self._totcol):
+            if (i != self._col):
+                self._attack.append((self._line, i)) 
+    
+
+
+class Tower(Piece):
+    def __init__(self, col, line, totcol, totline):
+        super().__init__(col, line, totcol, totline)
+        super().perpendicularAttack()
 
 
 
+class Bishop(Piece):
+    def __init__(self, col, line, totcol, totline):
+        super().__init__(col, line, totcol, totline)
+        super().diagonalAttack()
+        
+
+class Queen(Piece):
+    def __init__(self, col, line, totcol, totline):
+        super().__init__(col, line, totcol, totline)
+        super().diagonalAttack()
+        super().perpendicularAttack()
 
 
+class Horse(Piece):
+    def __init__(self, col, line, totcol, totline):
+        super().__init__(col, line, totcol, totline)
+
+        l = self._line
+        c = self._col
+        if (l > 0):
+            l -= 1
+            if (l >= 0):
+                if (c >= 2):
+                    self._attack.append((l, c-2))
+                if (c <= totcol-3):
+                    self._attack.append((l, c+2))
+            if (l > 0):
+                l -= 1
+                if (c >= 1):
+                    self._attack.append((l, c-1))
+                if (c <= totcol-2):
+                    self._attack.append((l, c+1))
+
+        l = self._line
+        if (l < totline-1):
+            l += 1
+            if (l <= totline-1):
+                if (c >= 2):
+                    self._attack.append((l, c-2))
+                if (c <= totcol-3):
+                    self._attack.append((l, c+2))
+            if (l < totline-1):
+                l += 1
+                if (c >= 1):
+                    self._attack.append((l, c-1))
+                if (c <= totcol-2):
+                    self._attack.append((l, c+1))
+
+        l = self._line
+        if (c > 0):
+            c -= 1
+            if (c >= 0):
+                if (l >= 2):
+                    self._attack.append((l-2, c))
+                if (l <= totline-3):
+                    self._attack.append((l+2, c))
+            if (c > 0):
+                c -= 1
+                if (l >= 1):
+                    self._attack.append((l-1, c))
+                if (l <= totline-2):
+                    self._attack.append((l+1, c))
+
+        c = self._col
+        if (c < totcol-1):
+            c += 1
+            if (c <= totcol-1):
+                if (l >= 2):
+                    self._attack.append((l-2, c))
+                if (l <= totline-3):
+                    self._attack.append((l+2, c))
+            if (c < totcol-1):
+                c += 1
+                if (l >= 1):
+                    self._attack.append((l-1, c))
+                if (l <= totline-2):
+                    self._attack.append((l+1, c))
 
 
