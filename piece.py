@@ -1,39 +1,66 @@
 
 class Piece:
-    __col = 0
-    __line = 0
-    __totcol = 0
-    __totline = 0
-    __attack = []
+    _col = 0
+    _line = 0
+    _totcol = 0
+    _totline = 0
+    _attack = []
     
     def __init__(self, col, line, totcol, totline):
-        self.__col = col
-        self.__line = line
-        self.__totcol = totcol
-        self.__totline = totline
+        self._col = col
+        self._line = line
+        self._totcol = totcol
+        self._totline = totline
 
     def getPos(self):
-        return [self.__line,self.__col]
+        return [self._line,self._col]
     
     def getAttack(self):
-        return self.__attack
+        return self._attack
+    
+    def printAttack(self):
+        for l in range (len(self._attack)):
+                print( self._attack[l])
     
 
 
 class Tower(Piece):
     def __init__(self, col, line, totcol, totline):
-        super().__init__(self, col, line, totcol, totline)
-        for i in range(self.__totline):
-            self.__attack.push_back((i, self.__col)) 
+        super().__init__(col, line, totcol, totline)
+        for i in range(self._totline):
+            self._attack.append((i, self._col)) 
 
-        for i in range(self.__totcol):
-            self.__attack.push_back((self.__line, i)) 
+        for i in range(self._totcol):
+            self._attack.append((self._line, i)) 
 
 
 
 class Bishop(Piece):
     def __init__(self, col, line, totcol, totline):
-        super().__init__(self, col, line, totcol, totline)
+        super().__init__(col, line, totcol, totline)
+        xnyn = True
+        xnyp = True
+        xpyn = True
+        xpyp = True
+        i = 1
+        while ( xnyn or xnyp or xpyn or xpyp) :
+            if ( self._line - i >= 0 and self._col - i >= 0 and xnyn ):
+                self._attack.append(( self._line - i,self._col - i ))
+            else : xnyn = False
+            if ( self._line + i < self._totline and self._col - i >= 0 and xnyp ):
+                self._attack.append(( self._line + i,self._col - i ))
+            else : xnyp = False
+            if ( self._line - i >= 0 and self._col + i < self._totcol and xpyn ):
+                self._attack.append(( self._line - i,self._col + i ))
+            else : xpyn = False 
+            if ( self._line + i < self._totline and self._col + i < self._totcol and xpyp ):
+                self._attack.append(( self._line + i,self._col + i ))
+            else : xpyp = False 
+            i += 1
+
+
+
+
 
 
 
