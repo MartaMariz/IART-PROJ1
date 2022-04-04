@@ -1,10 +1,11 @@
-from piece import Bishop, Piece, Tower
+from piece import Bishop, Piece, Tower, Queen, Horse
 
 board = [
-        [None, Piece( 1, 0, 4, 4), None, None],
-        [None, None, None, None],
-        [None, None,Bishop(2, 2, 4, 4), None],
-        [None, None, None, None]
+        [None, None, None, None, None],
+        [None, None, None, None, None],
+        [None, None, Horse(2, 2, 5, 5), None, None],
+        [None, None, None, None, None],
+        [None, None, None, None, None]
         ]
 
 if (board[2][2] is not None):
