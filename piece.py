@@ -74,6 +74,7 @@ class Queen(Piece):
         super().perpendicularAttack()
 
 
+
 class Horse(Piece):
     def __init__(self, col, line, totcol, totline):
         super().__init__(col, line, totcol, totline)
