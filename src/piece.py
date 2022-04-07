@@ -43,7 +43,7 @@ class Piece:
             else : xpyp = False 
             i += 1
 
-    def perpendicularAttack(self):
+    def orthogonalAttack(self):
         for i in range(self._totline):
             if (i != self._line):
                 self._attack.append((i, self._col)) 
@@ -57,7 +57,7 @@ class Piece:
 class Tower(Piece):
     def __init__(self, col, line, totcol, totline):
         super().__init__(col, line, totcol, totline)
-        super().perpendicularAttack()
+        super().orthogonalAttack()
 
 
 
@@ -71,7 +71,8 @@ class Queen(Piece):
     def __init__(self, col, line, totcol, totline):
         super().__init__(col, line, totcol, totline)
         super().diagonalAttack()
-        super().perpendicularAttack()
+        super().orthogonalAttack()
+
 
 
 class Horse(Piece):
