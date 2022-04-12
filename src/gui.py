@@ -1,13 +1,146 @@
+from piece import Bishop, Tower, Queen, Horse
 import pygame
 
+
 class GUI:
+    _BG = (0,0,0)
+    _DIV = (255,255,255)
+    SCREENWIDTH = 600
+    SCREENHEIGHT = 600
+    
 
     def __init__(self):
         pygame.init()
-        screen = pygame.display.set_mode((800,600))
-        inGame = True
+        self._screen = pygame.display.set_mode((self.SCREENWIDTH,self.SCREENHEIGHT))
 
-        while (inGame): 
+
+    def showboard(self, size, pieces):
+        global inGame
+        inGame = True
+        while inGame:
             for event in pygame.event.get():
-                if event == pygame.QUIT:
+                if event.type == pygame.QUIT:
                     inGame = False
+                self._screen.fill(self._BG)
+                self.size = size
+                if size == 4:
+                    self.draw4x4()
+                else:
+                    self.draw5x5()
+
+                self.setPieces(pieces)
+                
+                pygame.display.flip()
+
+
+    def draw4x4(self):
+        pygame.draw.line(self._screen, self._DIV, [0,150], [self.SCREENWIDTH,150], 3)
+        pygame.draw.line(self._screen, self._DIV, [0,300], [self.SCREENWIDTH,300], 3)
+        pygame.draw.line(self._screen, self._DIV, [0,450], [self.SCREENWIDTH,450], 3)
+
+        pygame.draw.line(self._screen, self._DIV, [150,0], [150,self.SCREENHEIGHT], 3)
+        pygame.draw.line(self._screen, self._DIV, [300,0], [300,self.SCREENHEIGHT], 3)
+        pygame.draw.line(self._screen, self._DIV, [450,0], [450,self.SCREENHEIGHT], 3)
+
+    def draw5x5(self):
+        pygame.draw.line(self._screen, self._DIV, [0,120], [self.SCREENWIDTH,120], 3)
+        pygame.draw.line(self._screen, self._DIV, [0,240], [self.SCREENWIDTH,240], 3)
+        pygame.draw.line(self._screen, self._DIV, [0,360], [self.SCREENWIDTH,360], 3)
+        pygame.draw.line(self._screen, self._DIV, [0,480], [self.SCREENWIDTH,480], 3)
+
+        pygame.draw.line(self._screen, self._DIV, [120,0], [120,self.SCREENHEIGHT], 3)
+        pygame.draw.line(self._screen, self._DIV, [240,0], [240,self.SCREENHEIGHT], 3)
+        pygame.draw.line(self._screen, self._DIV, [360,0], [360,self.SCREENHEIGHT], 3)
+        pygame.draw.line(self._screen, self._DIV, [480,0], [480,self.SCREENHEIGHT], 3)
+
+    def setPieces(self, vec):
+        sprites = pygame.sprite.Group()
+        if self.size == 4:
+            pieceSize = 150
+        else:
+            pieceSize = 120
+        for v in vec:
+            if isinstance(v,Tower):
+                sprites.add(Tower_sprite(pieceSize, v))
+            elif isinstance(v,Bishop):
+                sprites.add(Bishop_sprite(pieceSize, v))
+            elif isinstance(v,Queen):
+                sprites.add(Queen_sprite(pieceSize, v))
+            else:
+                sprites.add(Horse_sprite(pieceSize, v))
+        sprites.draw(self._screen)
+        pygame.display.flip()
+
+
+
+class Piece_sprite(pygame.sprite.Sprite):
+    _width = 0
+    _height = 0
+    def __init__(self, size, obj):
+        super().__init__()
+        self._line = obj._line
+        self._col = obj._col
+
+class Tower_sprite(Piece_sprite):
+    def __init__(self, size, obj):
+        super().__init__(size, obj)
+        self.image = pygame.Surface([size, size])
+        
+        # Instead we could load a proper pciture of a car...
+        image1_not_scaled = pygame.image.load("images/tower.png").convert_alpha()
+        
+        self.image = pygame.transform.scale(image1_not_scaled, [size, size])
+ 
+        # Fetch the rectangle object that has the dimensions of the image.
+        self.rect = self.image.get_rect()
+
+        self.rect.x = self._col*size
+        self.rect.y = self._line*size
+
+class Queen_sprite(Piece_sprite):
+    def __init__(self, size, obj):
+        super().__init__(size, obj)
+        self.image = pygame.Surface([size, size])
+        
+        # Instead we could load a proper pciture of a car...
+        image1_not_scaled = pygame.image.load("images/queen.png").convert_alpha()
+        
+        self.image = pygame.transform.scale(image1_not_scaled, [size, size])
+ 
+        # Fetch the rectangle object that has the dimensions of the image.
+        self.rect = self.image.get_rect()
+
+        self.rect.x = self._col*size
+        self.rect.y = self._line*size
+
+class Horse_sprite(Piece_sprite):
+    def __init__(self, size, obj):
+        super().__init__(size, obj)
+        self.image = pygame.Surface([size, size])
+        
+        # Instead we could load a proper pciture of a car...
+        image1_not_scaled = pygame.image.load("images/horse.png").convert_alpha()
+        
+        self.image = pygame.transform.scale(image1_not_scaled, [size, size])
+ 
+        # Fetch the rectangle object that has the dimensions of the image.
+        self.rect = self.image.get_rect()
+
+        self.rect.x = self._col*size
+        self.rect.y = self._line*size
+
+class Bishop_sprite(Piece_sprite):
+    def __init__(self, size, obj):
+        super().__init__(size, obj)
+        self.image = pygame.Surface([size, size])
+        
+        # Instead we could load a proper pciture of a car...
+        image1_not_scaled = pygame.image.load("images/bishop.png").convert_alpha()
+        
+        self.image = pygame.transform.scale(image1_not_scaled, [size, size])
+ 
+        # Fetch the rectangle object that has the dimensions of the image.
+        self.rect = self.image.get_rect()
+
+        self.rect.x = self._col*size
+        self.rect.y = self._line*size
