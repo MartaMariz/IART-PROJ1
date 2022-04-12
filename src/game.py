@@ -1,18 +1,16 @@
 from piece import Bishop, Tower, Queen, Horse
 from snake import Snake
 from gui import GUI
+from utils import Action
 
 
 class GameState:
         __board = [[]]
         __size = 5
-        __snake_c = 0
-        __snake_l = 0
-        print("hello")
-        
         
         def __init__(self):
                 self.gui = GUI()
+                self.snake = Snake(self.__size)
                 tower = Tower(2, 2, 5, 5)
                 bishop = Bishop(1, 0, 5, 5)
                 horse = Horse(3, 2, 5, 5)
@@ -22,17 +20,20 @@ class GameState:
                         [None, None, None, None, None],
                         [None, None, None, None, None],
                         [None, None, tower, None, None],
-                        [1,   1, None, None, None],
+                        [None,   None, None, None, None],
                         [Snake, None, None, None, None]
                         ]
                 
                 self.game(vec)
-                
-        def game(self, vec):
-                self.gui.showboard(self.__size, vec)
         
-        def up(self): 
-                if ( self.__snake_pos[0] > 0 ): return 0
+        #def evalMove(self, move):
 
-                if (self.__snake_l + 1 < len( self.__board )): return 0
 
+        def game(self, vec):
+                inGame = True
+                while(inGame):
+                        nextAction = self.gui.showboard(self.__size, vec, self.snake)
+                        if nextAction == Action.QUIT:
+                                print("bye!")
+                                inGame = False
+                        else: self.snake.updateSnake(nextAction)

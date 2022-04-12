@@ -1,36 +1,55 @@
 from piece import Bishop, Tower, Queen, Horse
+from snake import Snake
+from utils import Action
 import pygame
 
 
 class GUI:
     _BG = (0,0,0)
     _DIV = (255,255,255)
+    _SNAKE = (2, 90, 22)
     SCREENWIDTH = 600
     SCREENHEIGHT = 600
     
-
     def __init__(self):
         pygame.init()
         self._screen = pygame.display.set_mode((self.SCREENWIDTH,self.SCREENHEIGHT))
 
 
-    def showboard(self, size, pieces):
+    def showboard(self, size, pieces, snake):
+        clock=pygame.time.Clock()
         global inGame
         inGame = True
         while inGame:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     inGame = False
-                self._screen.fill(self._BG)
-                self.size = size
-                if size == 4:
-                    self.draw4x4()
-                else:
-                    self.draw5x5()
-
-                self.setPieces(pieces)
                 
-                pygame.display.flip()
+            keys = pygame.key.get_pressed()
+            if keys[pygame.K_UP]:
+                if snake.up():
+                    print("up")
+                    return Action.UP
+            #if keys[pygame.K_RIGHT]:
+            #    if right():
+
+            self._screen.fill(self._BG)
+            self.size = size
+            if size == 4:
+                self.draw4x4()
+            else:
+                self.draw5x5()
+
+            self.setPieces(pieces)
+            self.setSnake(snake)
+            
+            pygame.display.flip()
+
+            clock.tick(50)
+
+        pygame.quit()
+        return Action.QUIT
+            
 
 
     def draw4x4(self):
@@ -71,6 +90,16 @@ class GUI:
         sprites.draw(self._screen)
         pygame.display.flip()
 
+    def setSnake(self, snake):
+        if len(snake.bitmap) == 5:
+            space = 120
+        else:
+            space = 150
+        for i in range(len(snake.bitmap)):
+            for j in range(len(snake.bitmap[i])):
+                if snake.bitmap[i][j]: 
+                    pygame.draw.rect(self._screen, self._SNAKE, [space*j,space*i,space,space])
+
 
 
 class Piece_sprite(pygame.sprite.Sprite):
@@ -86,12 +115,10 @@ class Tower_sprite(Piece_sprite):
         super().__init__(size, obj)
         self.image = pygame.Surface([size, size])
         
-        # Instead we could load a proper pciture of a car...
         image1_not_scaled = pygame.image.load("images/tower.png").convert_alpha()
         
         self.image = pygame.transform.scale(image1_not_scaled, [size, size])
  
-        # Fetch the rectangle object that has the dimensions of the image.
         self.rect = self.image.get_rect()
 
         self.rect.x = self._col*size
@@ -102,12 +129,10 @@ class Queen_sprite(Piece_sprite):
         super().__init__(size, obj)
         self.image = pygame.Surface([size, size])
         
-        # Instead we could load a proper pciture of a car...
         image1_not_scaled = pygame.image.load("images/queen.png").convert_alpha()
         
         self.image = pygame.transform.scale(image1_not_scaled, [size, size])
  
-        # Fetch the rectangle object that has the dimensions of the image.
         self.rect = self.image.get_rect()
 
         self.rect.x = self._col*size
@@ -118,12 +143,10 @@ class Horse_sprite(Piece_sprite):
         super().__init__(size, obj)
         self.image = pygame.Surface([size, size])
         
-        # Instead we could load a proper pciture of a car...
         image1_not_scaled = pygame.image.load("images/horse.png").convert_alpha()
         
         self.image = pygame.transform.scale(image1_not_scaled, [size, size])
  
-        # Fetch the rectangle object that has the dimensions of the image.
         self.rect = self.image.get_rect()
 
         self.rect.x = self._col*size
@@ -134,12 +157,10 @@ class Bishop_sprite(Piece_sprite):
         super().__init__(size, obj)
         self.image = pygame.Surface([size, size])
         
-        # Instead we could load a proper pciture of a car...
         image1_not_scaled = pygame.image.load("images/bishop.png").convert_alpha()
         
         self.image = pygame.transform.scale(image1_not_scaled, [size, size])
  
-        # Fetch the rectangle object that has the dimensions of the image.
         self.rect = self.image.get_rect()
 
         self.rect.x = self._col*size
