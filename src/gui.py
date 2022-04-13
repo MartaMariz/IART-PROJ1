@@ -1,5 +1,4 @@
 from piece import Bishop, Tower, Queen, Horse
-from snake import Snake
 from utils import Action
 import pygame
 
@@ -44,7 +43,6 @@ class GUI:
                             print("right")
                             return Action.RIGHT
 
-
             self._screen.fill(self._BG)
             self.size = size
             if size == 4:
@@ -61,8 +59,6 @@ class GUI:
 
         pygame.quit()
         return Action.QUIT
-            
-
 
     def draw4x4(self):
         pygame.draw.line(self._screen, self._DIV, [0,150], [self.SCREENWIDTH,150], 3)
@@ -111,8 +107,6 @@ class GUI:
             for j in range(len(snake.bitmap[i])):
                 if snake.bitmap[i][j]: 
                     pygame.draw.rect(self._screen, self._SNAKE, [space*j,space*i,space,space])
-
-
 
 
 class Piece_sprite(pygame.sprite.Sprite):
