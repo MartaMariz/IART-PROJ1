@@ -24,14 +24,26 @@ class GUI:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     inGame = False
-                
-            keys = pygame.key.get_pressed()
-            if keys[pygame.K_UP]:
-                if snake.up():
-                    print("up")
-                    return Action.UP
-            #if keys[pygame.K_RIGHT]:
-            #    if right():
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        inGame = False
+                    if event.key == pygame.K_UP:
+                        if snake.up():
+                            print("up")
+                            return Action.UP
+                    if event.key == pygame.K_DOWN:
+                        if snake.down():
+                            print("down")
+                            return Action.DOWN
+                    if event.key == pygame.K_LEFT:
+                        if snake.left():
+                            print("left")
+                            return Action.LEFT    
+                    if event.key == pygame.K_RIGHT:
+                        if snake.right():
+                            print("right")
+                            return Action.RIGHT
+
 
             self._screen.fill(self._BG)
             self.size = size
@@ -99,6 +111,7 @@ class GUI:
             for j in range(len(snake.bitmap[i])):
                 if snake.bitmap[i][j]: 
                     pygame.draw.rect(self._screen, self._SNAKE, [space*j,space*i,space,space])
+
 
 
 
