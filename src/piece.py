@@ -20,7 +20,7 @@ class Piece:
     
     def printAttack(self):
         for l in range (len(self._attack)):
-                print( self._attack[l])
+            print( self._attack[l])
 
     def diagonalAttack(self):
         xnyn = True
@@ -43,7 +43,7 @@ class Piece:
             else : xpyp = False 
             i += 1
 
-    def perpendicularAttack(self):
+    def orthogonalAttack(self):
         for i in range(self._totline):
             if (i != self._line):
                 self._attack.append((i, self._col)) 
@@ -51,29 +51,23 @@ class Piece:
         for i in range(self._totcol):
             if (i != self._col):
                 self._attack.append((self._line, i)) 
-    
 
 
 class Tower(Piece):
     def __init__(self, col, line, totcol, totline):
         super().__init__(col, line, totcol, totline)
-        super().perpendicularAttack()
-
-
+        super().orthogonalAttack()
 
 class Bishop(Piece):
     def __init__(self, col, line, totcol, totline):
         super().__init__(col, line, totcol, totline)
-        super().diagonalAttack()
-        
+        super().diagonalAttack()   
 
 class Queen(Piece):
     def __init__(self, col, line, totcol, totline):
         super().__init__(col, line, totcol, totline)
         super().diagonalAttack()
-        super().perpendicularAttack()
-
-
+        super().orthogonalAttack()
 
 class Horse(Piece):
     def __init__(self, col, line, totcol, totline):
@@ -139,5 +133,3 @@ class Horse(Piece):
                     self._attack.append((l-1, c))
                 if (l <= totline-2):
                     self._attack.append((l+1, c))
-
-
