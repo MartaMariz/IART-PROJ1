@@ -143,3 +143,4 @@ class Snake:
             print("tf")
             return 1
         return 0
+

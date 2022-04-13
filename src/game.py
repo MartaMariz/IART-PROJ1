@@ -1,4 +1,5 @@
 from piece import Bishop, Tower, Queen, Horse
+
 from snake import Snake
 from gui import GUI
 from utils import Action
@@ -58,6 +59,9 @@ class GameState:
                 if (self.__board[self.snake.pos[0]][self.snake.pos[1]-1] != None):
                         vec.append(Action.LEFT)
         return vec
+
+
+
 
     def game(self, vec):
         inGame = True
