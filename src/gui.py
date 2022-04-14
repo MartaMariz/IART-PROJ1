@@ -42,6 +42,8 @@ class GUI:
                         if snake.right():
                             print("right")
                             return Action.RIGHT
+                    if event.key == pygame.K_b:
+                        return Action.BFS
 
             self._screen.fill(self._BG)
             self.size = size

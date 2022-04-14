@@ -137,9 +137,34 @@ class Snake:
         if (move == Action.LEFT):
             self.bitmap[self.pos[0]][self.pos[1]-1] = 1
             self.pos[1] -= 1
+    
+    def getNewSnake(self, move):
+        new_snake = Snake(self.board_size)
+        new_snake.bitmap = self.bitmap.copy()
+        if (move == Action.DOWN):
+            new_snake.bitmap[self.pos[0]+1][self.pos[1]] = 1
+            new_snake.pos[0] = self.pos[0]+1
+            new_snake.pos[1] = self.pos[1]
+        if (move == Action.UP):
+            new_snake.bitmap[self.pos[0]-1][self.pos[1]] = 1
+            new_snake.pos[0] = self.pos[0]-1
+            new_snake.pos[1] = self.pos[1]
+        if (move == Action.RIGHT):
+            new_snake.bitmap[self.pos[0]][self.pos[1]+1] = 1
+            new_snake.pos[0] = self.pos[0]
+            new_snake.pos[1] = self.pos[1]+1
+        if (move == Action.LEFT):
+            new_snake.bitmap[self.pos[0]][self.pos[1]-1] = 1
+            new_snake.pos[0] = self.pos[0]
+            new_snake.pos[1] = self.pos[1]-1
+        
+        print(new_snake.bitmap)
+            
+        print(new_snake.bitmap)
+        return new_snake
 
     def endGame(self):
-        if self.pos[0] == self.board_size-1 and self.pos[1] == self.board_size-1: 
+        if self.pos[0] == 0 and self.pos[1] == self.board_size-1: 
             print("tf")
             return 1
         return 0

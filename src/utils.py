@@ -5,3 +5,4 @@ class Action(Enum):
     LEFT = 3
     RIGHT = 4
     QUIT = 5
+    BFS = 6
