@@ -18,6 +18,7 @@ class Piece:
 
     def AttackNum(self, snake):
         num = 0
+        
         for l in range (self._board_size):
             for c in range (self._board_size):
                 if (snake[l][c] & self._bitmap[l][c]):

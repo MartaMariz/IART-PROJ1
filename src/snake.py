@@ -4,116 +4,116 @@ import numpy as np
 class Snake:
     def __init__(self, size):
         self.board_size = size
-        self.pos = [size-1, 0]
-        self.bitmap = np.array([[0]*(size)]*(size))
-        self.bitmap[self.pos[0]][self.pos[1]] = 1
-        print(self.bitmap)
-        
+        self.__pos = [size-1, 0]
+        self.__bitmap = np.array([[0]*(size)]*(size))
+        self.__bitmap[self.__pos[0]][self.__pos[1]] = 1
+        self.__cost = 0
+    
+    def copy(self, snake):
+        self.__bitmap = snake.getBitmap()
+        self.__cost = snake.__cost + 1
+        self.__pos[0] = snake.getLine()
+        self.__pos[1] = snake.getCol()
+    
+    def getBitmap(self):
+        return self.__bitmap.copy()
+    
+    def getCost(self):
+        return self.__cost
+    
+    def getBoardSize(self):
+        return self.board_size
+    
+    def getLine(self):
+        return self.__pos[0]
+    
+    def getCol(self):
+        return self.__pos[1]
+
+    def isOcupied(self, l, c):
+        return self.__bitmap[l][c]
+      
     def up(self): 
-        if self.pos[0] <= 0: return 0
-        if self.bitmap[self.pos[0]-1][self.pos[1]]: return 0
-        if (self.pos[0]-1 >= 0):
-            if (self.pos[1]-1 >= 0):
-                if (self.bitmap[self.pos[0]-1][self.pos[1]-1]):
-                    print("here")
+        if self.__pos[0] <= 0: return 0
+        if self.__bitmap[self.__pos[0]-1][self.__pos[1]]: return 0
+        if (self.__pos[0]-1 >= 0):
+            if (self.__pos[1]-1 >= 0):
+                if (self.__bitmap[self.__pos[0]-1][self.__pos[1]-1]):
                     return 0
-            if (self.pos[1]+1 <= self.board_size-1):
-                if(self.bitmap[self.pos[0]-1][self.pos[1]+1]):
-                    print("there")
+            if (self.__pos[1]+1 <= self.board_size-1):
+                if(self.__bitmap[self.__pos[0]-1][self.__pos[1]+1]):
                     return 0
-            print("na boa")
-        if (self.pos[0]-2 >= 0):
-            if (self.pos[1]-1 >= 0):
-                if (self.bitmap[self.pos[0]-2][self.pos[1]-1]):
-                    print("there2")
+        if (self.__pos[0]-2 >= 0):
+            if (self.__pos[1]-1 >= 0):
+                if (self.__bitmap[self.__pos[0]-2][self.__pos[1]-1]):
                     return 0
-            if (self.pos[1]+1 <= self.board_size-1):
-                if(self.bitmap[self.pos[0]-2][self.pos[1]+1]):
-                    print("there3")
+            if (self.__pos[1]+1 <= self.board_size-1):
+                if(self.__bitmap[self.__pos[0]-2][self.__pos[1]+1]):
                     return 0
-            print("na boa2")
             return 1 
         return 1
 
     def down(self): 
-        if self.pos[0] >= self.board_size-1: return 0
-        if self.bitmap[self.pos[0]+1][self.pos[1]]: return 0
-        if (self.pos[0]+1 <= self.board_size-1):
-            if (self.pos[1]-1 >= 0):
-                if (self.bitmap[self.pos[0]+1][self.pos[1]-1]):
-                    print("here")
+        if self.__pos[0] >= self.board_size-1: return 0
+        if self.__bitmap[self.__pos[0]+1][self.__pos[1]]: return 0
+        if (self.__pos[0]+1 <= self.board_size-1):
+            if (self.__pos[1]-1 >= 0):
+                if (self.__bitmap[self.__pos[0]+1][self.__pos[1]-1]):
                     return 0
-            if (self.pos[1]+1 <= self.board_size-1):
-                if(self.bitmap[self.pos[0]+1][self.pos[1]+1]):
-                    print("there")
+            if (self.__pos[1]+1 <= self.board_size-1):
+                if(self.__bitmap[self.__pos[0]+1][self.__pos[1]+1]):
                     return 0
-            print("na boa")
-        if (self.pos[0]+2 <= self.board_size-1):
-            if (self.pos[1]-1 >= 0):
-                if (self.bitmap[self.pos[0]+2][self.pos[1]-1]):
-                    print("there2")
+        if (self.__pos[0]+2 <= self.board_size-1):
+            if (self.__pos[1]-1 >= 0):
+                if (self.__bitmap[self.__pos[0]+2][self.__pos[1]-1]):
                     return 0
-            if (self.pos[1]+1 <= self.board_size-1):
-                if(self.bitmap[self.pos[0]+2][self.pos[1]+1]):
-                    print("there3")
+            if (self.__pos[1]+1 <= self.board_size-1):
+                if(self.__bitmap[self.__pos[0]+2][self.__pos[1]+1]):
                     return 0
-            print("na boa2")
             return 1
         return 1
 
     def left(self): 
-        if self.pos[1] <= 0: return 0
-        if self.bitmap[self.pos[0]][self.pos[1]-1]: return 0
-        if (self.pos[1]-1 >= 0):
-            if (self.pos[0]-1 >= 0):
-                if (self.bitmap[self.pos[0]-1][self.pos[1]-1]):
-                    print("here")
+        if self.__pos[1] <= 0: return 0
+        if self.__bitmap[self.__pos[0]][self.__pos[1]-1]: return 0
+        if (self.__pos[1]-1 >= 0):
+            if (self.__pos[0]-1 >= 0):
+                if (self.__bitmap[self.__pos[0]-1][self.__pos[1]-1]):
                     return 0
-            if (self.pos[0]+1 <= self.board_size-1):
-                if(self.bitmap[self.pos[0]+1][self.pos[1]-1]):
-                    print("there")
+            if (self.__pos[0]+1 <= self.board_size-1):
+                if(self.__bitmap[self.__pos[0]+1][self.__pos[1]-1]):
                     return 0
-            print("na boa")
-        if (self.pos[1]-2 >= 0):
-            if (self.pos[0]-1 >= 0):
-                if (self.bitmap[self.pos[0]-1][self.pos[1]-2]):
-                    print("there2")
+        if (self.__pos[1]-2 >= 0):
+            if (self.__pos[0]-1 >= 0):
+                if (self.__bitmap[self.__pos[0]-1][self.__pos[1]-2]):
                     return 0
-            if (self.pos[0]+1 <= self.board_size-1):
-                if(self.bitmap[self.pos[0]+1][self.pos[1]-2]):
-                    print("there3")
+            if (self.__pos[0]+1 <= self.board_size-1):
+                if(self.__bitmap[self.__pos[0]+1][self.__pos[1]-2]):
                     return 0
-            print("na boa2")
             return 1  
         return 1
 
     def right(self): 
-        if self.pos[1] >= self.board_size-1: return 0
-        if self.bitmap[self.pos[0]][self.pos[1]+1]: return 0
-        if (self.pos[1]+1 <= self.board_size-1):
-            if (self.pos[0]-1 >= 0):
-                if (self.bitmap[self.pos[0]-1][self.pos[1]+1]):
-                    print("here")
+        if self.__pos[1] >= self.board_size-1: return 0
+        if self.__bitmap[self.__pos[0]][self.__pos[1]+1]: return 0
+        if (self.__pos[1]+1 <= self.board_size-1):
+            if (self.__pos[0]-1 >= 0):
+                if (self.__bitmap[self.__pos[0]-1][self.__pos[1]+1]):
                     return 0
-            if (self.pos[0]+1 <= self.board_size-1):
-                if(self.bitmap[self.pos[0]+1][self.pos[1]+1]):
-                    print("there")
+            if (self.__pos[0]+1 <= self.board_size-1):
+                if(self.__bitmap[self.__pos[0]+1][self.__pos[1]+1]):
                     return 0
-            print("na boa")
-        if (self.pos[1]+2 <= self.board_size-1):
-            if (self.pos[0]-1 >= 0):
-                if (self.bitmap[self.pos[0]-1][self.pos[1]+2]):
-                    print("there2")
+        if (self.__pos[1]+2 <= self.board_size-1):
+            if (self.__pos[0]-1 >= 0):
+                if (self.__bitmap[self.__pos[0]-1][self.__pos[1]+2]):
                     return 0
-            if (self.pos[0]+1 <= self.board_size-1):
-                if(self.bitmap[self.pos[0]+1][self.pos[1]+2]):
-                    print("there3")
+            if (self.__pos[0]+1 <= self.board_size-1):
+                if(self.__bitmap[self.__pos[0]+1][self.__pos[1]+2]):
                     return 0
-            print("na boa2")
             return 1
         return 1
 
-    def checkPossibleMoves(self, pieces):
+    def checkpossibleMoves(self, pieces):
         if self.up() and not Action.UP in pieces:
             return 1
         if self.down() and not Action.DOWN in pieces:
@@ -126,43 +126,29 @@ class Snake:
 
     def updateSnake(self, move):
         if (move == Action.DOWN):
-            self.bitmap[self.pos[0]+1][self.pos[1]] = 1
-            self.pos[0] += 1
+            self.__bitmap[self.__pos[0]+1][self.__pos[1]] = 1
+            self.__pos[0] += 1
         if (move == Action.UP):
-            self.bitmap[self.pos[0]-1][self.pos[1]] = 1
-            self.pos[0] -= 1
+            self.__bitmap[self.__pos[0]-1][self.__pos[1]] = 1
+            self.__pos[0] -= 1
         if (move == Action.RIGHT):
-            self.bitmap[self.pos[0]][self.pos[1]+1] = 1
-            self.pos[1] += 1
+            self.__bitmap[self.__pos[0]][self.__pos[1]+1] = 1
+            self.__pos[1] += 1
         if (move == Action.LEFT):
-            self.bitmap[self.pos[0]][self.pos[1]-1] = 1
-            self.pos[1] -= 1
+            self.__bitmap[self.__pos[0]][self.__pos[1]-1] = 1
+            self.__pos[1] -= 1
     
     def getNewSnake(self, move):
         new_snake = Snake(self.board_size)
-        new_snake.bitmap = self.bitmap.copy()
-        if (move == Action.DOWN):
-            new_snake.bitmap[self.pos[0]+1][self.pos[1]] = 1
-            new_snake.pos[0] = self.pos[0]+1
-            new_snake.pos[1] = self.pos[1]
-        if (move == Action.UP):
-            new_snake.bitmap[self.pos[0]-1][self.pos[1]] = 1
-            new_snake.pos[0] = self.pos[0]-1
-            new_snake.pos[1] = self.pos[1]
-        if (move == Action.RIGHT):
-            new_snake.bitmap[self.pos[0]][self.pos[1]+1] = 1
-            new_snake.pos[0] = self.pos[0]
-            new_snake.pos[1] = self.pos[1]+1
-        if (move == Action.LEFT):
-            new_snake.bitmap[self.pos[0]][self.pos[1]-1] = 1
-            new_snake.pos[0] = self.pos[0]
-            new_snake.pos[1] = self.pos[1]-1
+        new_snake.copy( self )
+        new_snake.updateSnake(move)
+       
                     
-        print(new_snake.bitmap)
+        print(new_snake.getBitmap())
         return new_snake
 
     def endGame(self):
-        if self.pos[0] == 0 and self.pos[1] == self.board_size-1: 
+        if self.__pos[0] == 0 and self.__pos[1] == self.board_size-1: 
             print("tf")
             return 1
         return 0
