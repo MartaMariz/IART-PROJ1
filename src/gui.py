@@ -1,22 +1,47 @@
-from piece import Bishop, Tower, Queen, Horse
+from piece import Bishop, Tower, Queen, Horse, King
 from utils import Action
 import pygame
 
 
 class GUI:
-    _BG = (0,0,0)
-    _DIV = (255,255,255)
-    _SNAKE = (2, 90, 22)
+    BG = (0,0,0)
+    DIV = (255,255,255)
+    SNAKE = (167, 16, 167)
+    MENU_BOX = (112, 16, 112)
+    MENU_FONT = (197, 157, 192)
     SCREENWIDTH = 600
-    SCREENHEIGHT = 600
+    SCREENHEIGHT = 750
+    COMMANDS = 150
     
     def __init__(self):
         pygame.init()
         self._screen = pygame.display.set_mode((self.SCREENWIDTH,self.SCREENHEIGHT))
 
+    def mainMenu(self):
+        inMenu = True
+        while (inMenu):
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    print("sai")
+                    inMenu = False
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_p:
+                        return Action.SHOW
+                    elif event.key == pygame.K_ESCAPE:
+                        inMenu = False
+            self._screen.fill(self.BG)
+            font = pygame.font.SysFont('comicsansms', 48)
+            #font1 = pygame.font.SysFont('comicsansms', 72)
+            img = font.render("Press P to see puzzle", True, self.MENU_FONT, self.MENU_BOX)
+            self._screen.blit(img, (20, 20))
+            img = font.render("Press ESC to quit", True, self.MENU_FONT, self.MENU_BOX)
+            self._screen.blit(img, (20, 70))
+            pygame.display.update()
+        return Action.QUIT
 
-    def showboard(self, size, pieces, snake):
-        clock=pygame.time.Clock()
+
+
+    def playPuzzle(self, size, pieces, snake):
         global inGame
         inGame = True
         while inGame:
@@ -45,47 +70,102 @@ class GUI:
                     if event.key == pygame.K_b:
                         return Action.BFS
 
-            self._screen.fill(self._BG)
-            self.size = size
-            if size == 4:
-                self.draw4x4()
-            else:
-                self.draw5x5()
+            self.drawBoard(size, pieces, snake)
+            font = pygame.font.SysFont(None, 48)
+            img = font.render("Press B to solve with BFS", True, self.MENU_FONT, self.MENU_BOX)
+            self._screen.blit(img, (0, self.SCREENHEIGHT-self.COMMANDS+20))
+            img = font.render("Press ESC to Main Menu", True, self.MENU_FONT, self.MENU_BOX)
+            self._screen.blit(img, (0, self.SCREENHEIGHT-self.COMMANDS+50))
+            pygame.display.update()
 
-            self.setPieces(pieces)
-            self.setSnake(snake)
-            
-            pygame.display.flip()
-
-            clock.tick(50)
-
-        pygame.quit()
         return Action.QUIT
 
-    def draw4x4(self):
-        pygame.draw.line(self._screen, self._DIV, [0,150], [self.SCREENWIDTH,150], 3)
-        pygame.draw.line(self._screen, self._DIV, [0,300], [self.SCREENWIDTH,300], 3)
-        pygame.draw.line(self._screen, self._DIV, [0,450], [self.SCREENWIDTH,450], 3)
+    def puzzleMenu(self, size, pieces, snake):
+        inDisplay = True
+        while inDisplay:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    inDisplay = False
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        inDisplay = False
+                    if event.key == pygame.K_b:
+                        return Action.BFS
+                    elif event.key == pygame.K_s:
+                        return Action.START
 
-        pygame.draw.line(self._screen, self._DIV, [150,0], [150,self.SCREENHEIGHT], 3)
-        pygame.draw.line(self._screen, self._DIV, [300,0], [300,self.SCREENHEIGHT], 3)
-        pygame.draw.line(self._screen, self._DIV, [450,0], [450,self.SCREENHEIGHT], 3)
+            self.drawBoard(size, pieces, snake)
+            font = pygame.font.SysFont(None, 48)
+            img = font.render("Press B to solve with BFS", True, self.MENU_FONT, self.MENU_BOX)
+            self._screen.blit(img, (0, self.SCREENHEIGHT-self.COMMANDS+10))
+            img = font.render("Press S to start game", True, self.MENU_FONT, self.MENU_BOX)
+            self._screen.blit(img, (0, self.SCREENHEIGHT-self.COMMANDS+40))
+            img = font.render("Press ESC to quit", True, self.MENU_FONT, self.MENU_BOX)
+            self._screen.blit(img, (0, self.SCREENHEIGHT-self.COMMANDS+70))
+            pygame.display.update()
+
+        return Action.QUIT    
+
+    def drawBoard(self, size, pieces, snake):
+        self._screen.fill(self.BG)
+        self.size = size
+        if size == 6:
+            self.draw6x6()
+        else:
+            self.draw5x5()
+
+        self.setPieces(pieces)
+        self.setSnake(snake)
+
+
+    def drawFinalMsg(self, msg):
+        inMsg = True
+        while (inMsg):
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    inMsg = False
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        return Action.MENU
+
+            self._screen.fill(self.BG)
+            font = pygame.font.SysFont(None, 48)
+            #font1 = pygame.font.SysFont('comicsansms', 72)
+            img = font.render(msg, True, self.MENU_FONT, self.MENU_BOX)
+            self._screen.blit(img, (20, 20))
+            img = font.render("Press ESC to Main Menu", True, self.MENU_FONT, self.MENU_BOX)
+            self._screen.blit(img, (20, 550))
+            pygame.display.update()
+        return Action.QUIT
+
+    def draw6x6(self):
+        pygame.draw.line(self._screen, self.DIV, [0,100], [self.SCREENWIDTH,100], 3)
+        pygame.draw.line(self._screen, self.DIV, [0,200], [self.SCREENWIDTH,200], 3)
+        pygame.draw.line(self._screen, self.DIV, [0,300], [self.SCREENWIDTH,300], 3)
+        pygame.draw.line(self._screen, self.DIV, [0,400], [self.SCREENWIDTH,400], 3)
+        pygame.draw.line(self._screen, self.DIV, [0,500], [self.SCREENWIDTH,500], 3)
+
+        pygame.draw.line(self._screen, self.DIV, [100,0], [100,self.SCREENHEIGHT-self.COMMANDS], 3)
+        pygame.draw.line(self._screen, self.DIV, [200,0], [200,self.SCREENHEIGHT-self.COMMANDS], 3)
+        pygame.draw.line(self._screen, self.DIV, [300,0], [300,self.SCREENHEIGHT-self.COMMANDS], 3)
+        pygame.draw.line(self._screen, self.DIV, [400,0], [400,self.SCREENHEIGHT-self.COMMANDS], 3)
+        pygame.draw.line(self._screen, self.DIV, [500,0], [500,self.SCREENHEIGHT-self.COMMANDS], 3)
 
     def draw5x5(self):
-        pygame.draw.line(self._screen, self._DIV, [0,120], [self.SCREENWIDTH,120], 3)
-        pygame.draw.line(self._screen, self._DIV, [0,240], [self.SCREENWIDTH,240], 3)
-        pygame.draw.line(self._screen, self._DIV, [0,360], [self.SCREENWIDTH,360], 3)
-        pygame.draw.line(self._screen, self._DIV, [0,480], [self.SCREENWIDTH,480], 3)
+        pygame.draw.line(self._screen, self.DIV, [0,120], [self.SCREENWIDTH,120], 3)
+        pygame.draw.line(self._screen, self.DIV, [0,240], [self.SCREENWIDTH,240], 3)
+        pygame.draw.line(self._screen, self.DIV, [0,360], [self.SCREENWIDTH,360], 3)
+        pygame.draw.line(self._screen, self.DIV, [0,480], [self.SCREENWIDTH,480], 3)
 
-        pygame.draw.line(self._screen, self._DIV, [120,0], [120,self.SCREENHEIGHT], 3)
-        pygame.draw.line(self._screen, self._DIV, [240,0], [240,self.SCREENHEIGHT], 3)
-        pygame.draw.line(self._screen, self._DIV, [360,0], [360,self.SCREENHEIGHT], 3)
-        pygame.draw.line(self._screen, self._DIV, [480,0], [480,self.SCREENHEIGHT], 3)
+        pygame.draw.line(self._screen, self.DIV, [120,0], [120,self.SCREENHEIGHT-self.COMMANDS], 3)
+        pygame.draw.line(self._screen, self.DIV, [240,0], [240,self.SCREENHEIGHT-self.COMMANDS], 3)
+        pygame.draw.line(self._screen, self.DIV, [360,0], [360,self.SCREENHEIGHT-self.COMMANDS], 3)
+        pygame.draw.line(self._screen, self.DIV, [480,0], [480,self.SCREENHEIGHT-self.COMMANDS], 3)
 
     def setPieces(self, vec):
         sprites = pygame.sprite.Group()
-        if self.size == 4:
-            pieceSize = 150
+        if self.size == 6:
+            pieceSize = 100
         else:
             pieceSize = 120
         for v in vec:
@@ -95,20 +175,21 @@ class GUI:
                 sprites.add(Bishop_sprite(pieceSize, v))
             elif isinstance(v,Queen):
                 sprites.add(Queen_sprite(pieceSize, v))
+            elif isinstance(v,King):
+                sprites.add(King_sprite(pieceSize, v))
             else:
                 sprites.add(Horse_sprite(pieceSize, v))
         sprites.draw(self._screen)
-        pygame.display.flip()
 
     def setSnake(self, snake):
         if len(snake.bitmap) == 5:
             space = 120
         else:
-            space = 150
+            space = 100
         for i in range(len(snake.bitmap)):
             for j in range(len(snake.bitmap[i])):
                 if snake.bitmap[i][j]: 
-                    pygame.draw.rect(self._screen, self._SNAKE, [space*j,space*i,space,space])
+                    pygame.draw.rect(self._screen, self.SNAKE, [space*j,space*i,space,space])
 
 
 class Piece_sprite(pygame.sprite.Sprite):
@@ -167,6 +248,20 @@ class Bishop_sprite(Piece_sprite):
         self.image = pygame.Surface([size, size])
         
         image1_not_scaled = pygame.image.load("images/bishop.png").convert_alpha()
+        
+        self.image = pygame.transform.scale(image1_not_scaled, [size, size])
+ 
+        self.rect = self.image.get_rect()
+
+        self.rect.x = self._col*size
+        self.rect.y = self._line*size
+
+class King_sprite(Piece_sprite):
+    def __init__(self, size, obj):
+        super().__init__(size, obj)
+        self.image = pygame.Surface([size, size])
+        
+        image1_not_scaled = pygame.image.load("images/king.png").convert_alpha()
         
         self.image = pygame.transform.scale(image1_not_scaled, [size, size])
  

@@ -1,5 +1,4 @@
-from piece import King, Bishop, Tower, Queen, Horse
-
+from piece import King, Bishop, Tower, Queen, Horse, King
 from snake import Snake
 from gui import GUI
 from utils import Action
@@ -36,15 +35,15 @@ class GameState:
                 
         for piece_info in pieces:
                 print(piece_info[0])
-                if ( piece_info[0] == 'H'):
+                if (piece_info[0] == 'H'):
                         curr_piece = Horse(piece_info[1], piece_info[2], self.__size)
-                elif ( piece_info[0] == 'Q' ):
+                elif (piece_info[0] == 'Q'):
                         curr_piece = Queen(piece_info[1], piece_info[2], self.__size)
-                elif ( piece_info[0] == 'T' ):
+                elif (piece_info[0] == 'T'):
                         curr_piece = Tower(piece_info[1], piece_info[2], self.__size)
-                elif ( piece_info[0] == 'B' ):
+                elif (piece_info[0] == 'B'):
                         curr_piece = Bishop(piece_info[1], piece_info[2], self.__size)
-                elif ( piece_info[0] == 'K' ):
+                elif (piece_info[0] == 'K'):
                         curr_piece = King(piece_info[1], piece_info[2], self.__size)
 
                 positions.append([piece_info[1], piece_info[2]])
@@ -54,10 +53,6 @@ class GameState:
         for piece in self.__piece_list:
                 piece.setAttack(positions)
                 piece.printAttack()
-        
-        
-
-   
         
     def evalMove(self, move, snake):
         if (move == Action.DOWN):
@@ -93,43 +88,12 @@ class GameState:
                         vec.append(Action.LEFT)
         return vec
 
-    def CountAttacks(self, snake): 
+    def countAttacks(self, snake): 
         curr_num = self.__piece_list[0].AttackNum(snake.bitmap)
 
         for piece in self.__piece_list:
             num_attacks = piece.AttackNum( snake.bitmap)
             if ( curr_num != num_attacks):
                     return 0
-
         return 1
-        
-
-
-    def game(self, vec):
-        inGame = True
-        while(inGame):
-            if self.snake.endGame():
-                print("the game is over!")
-                if (self.CountAttacks(self.snake)):
-                        print("You win!!")
-                else:
-                        print("You loose!")
-                inGame = False
-            pieces = self.checkPiecesNearby()
-            print(pieces)
-            if not self.snake.checkPossibleMoves(pieces):
-                print("No moves available")
-                inGame = False
-            nextAction = self.gui.showboard(self.__size, vec, self.snake)
-            if nextAction == Action.QUIT:
-                print("bye!")
-                inGame = False
-            else:
-                if (self.evalMove(nextAction, self.snake)):
-                    self.snake.updateSnake(nextAction)
             
-            
-            
-            
-
-

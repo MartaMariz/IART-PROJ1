@@ -15,23 +15,17 @@ class Snake:
         if (self.pos[0]-1 >= 0):
             if (self.pos[1]-1 >= 0):
                 if (self.bitmap[self.pos[0]-1][self.pos[1]-1]):
-                    print("here")
                     return 0
             if (self.pos[1]+1 <= self.board_size-1):
                 if(self.bitmap[self.pos[0]-1][self.pos[1]+1]):
-                    print("there")
                     return 0
-            print("na boa")
         if (self.pos[0]-2 >= 0):
             if (self.pos[1]-1 >= 0):
                 if (self.bitmap[self.pos[0]-2][self.pos[1]-1]):
-                    print("there2")
                     return 0
             if (self.pos[1]+1 <= self.board_size-1):
                 if(self.bitmap[self.pos[0]-2][self.pos[1]+1]):
-                    print("there3")
                     return 0
-            print("na boa2")
             return 1 
         return 1
 
@@ -41,23 +35,17 @@ class Snake:
         if (self.pos[0]+1 <= self.board_size-1):
             if (self.pos[1]-1 >= 0):
                 if (self.bitmap[self.pos[0]+1][self.pos[1]-1]):
-                    print("here")
                     return 0
             if (self.pos[1]+1 <= self.board_size-1):
                 if(self.bitmap[self.pos[0]+1][self.pos[1]+1]):
-                    print("there")
                     return 0
-            print("na boa")
         if (self.pos[0]+2 <= self.board_size-1):
             if (self.pos[1]-1 >= 0):
                 if (self.bitmap[self.pos[0]+2][self.pos[1]-1]):
-                    print("there2")
                     return 0
             if (self.pos[1]+1 <= self.board_size-1):
                 if(self.bitmap[self.pos[0]+2][self.pos[1]+1]):
-                    print("there3")
                     return 0
-            print("na boa2")
             return 1
         return 1
 
@@ -67,23 +55,17 @@ class Snake:
         if (self.pos[1]-1 >= 0):
             if (self.pos[0]-1 >= 0):
                 if (self.bitmap[self.pos[0]-1][self.pos[1]-1]):
-                    print("here")
                     return 0
             if (self.pos[0]+1 <= self.board_size-1):
                 if(self.bitmap[self.pos[0]+1][self.pos[1]-1]):
-                    print("there")
                     return 0
-            print("na boa")
         if (self.pos[1]-2 >= 0):
             if (self.pos[0]-1 >= 0):
                 if (self.bitmap[self.pos[0]-1][self.pos[1]-2]):
-                    print("there2")
                     return 0
             if (self.pos[0]+1 <= self.board_size-1):
                 if(self.bitmap[self.pos[0]+1][self.pos[1]-2]):
-                    print("there3")
                     return 0
-            print("na boa2")
             return 1  
         return 1
 
@@ -93,23 +75,17 @@ class Snake:
         if (self.pos[1]+1 <= self.board_size-1):
             if (self.pos[0]-1 >= 0):
                 if (self.bitmap[self.pos[0]-1][self.pos[1]+1]):
-                    print("here")
                     return 0
             if (self.pos[0]+1 <= self.board_size-1):
                 if(self.bitmap[self.pos[0]+1][self.pos[1]+1]):
-                    print("there")
                     return 0
-            print("na boa")
         if (self.pos[1]+2 <= self.board_size-1):
             if (self.pos[0]-1 >= 0):
                 if (self.bitmap[self.pos[0]-1][self.pos[1]+2]):
-                    print("there2")
                     return 0
             if (self.pos[0]+1 <= self.board_size-1):
                 if(self.bitmap[self.pos[0]+1][self.pos[1]+2]):
-                    print("there3")
                     return 0
-            print("na boa2")
             return 1
         return 1
 
