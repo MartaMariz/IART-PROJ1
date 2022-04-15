@@ -5,15 +5,15 @@ import numpy as np
 
 class BFS:
     def __init__(self, game):
-        print("here")
         snake = game.getSnake()
         tree = np.array([ snake ])
-        print(len(tree))
 
         i = 0
 
         while (1):
-            print("here1")
+            if (len(tree) == 0):
+                print("no available moves")
+                break
 
             curr_snake = tree[0]
             tree = np.delete(tree,0)
@@ -21,6 +21,7 @@ class BFS:
 
             if ( curr_snake.endGame()):
                 if (game.CountAttacks(curr_snake)): 
+                    print("Solution found!!")
                     break
                 else:
                     continue

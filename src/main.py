@@ -9,11 +9,12 @@ def main():
     while(inGame):
         if game.snake.endGame():
             print("the game is over!")
-            if (game.CountAttacks()):
+            if (game.CountAttacks(game.snake)):
                     print("You win!!")
             else:
                     print("You loose!")
             inGame = False
+            game.gui.showboard(game.getSize(), game.getPieces(), game.snake)
         pieces = game.checkPiecesNearby()
         print(pieces)
         if not game.snake.checkPossibleMoves(pieces):

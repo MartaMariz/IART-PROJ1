@@ -157,9 +157,7 @@ class Snake:
             new_snake.bitmap[self.pos[0]][self.pos[1]-1] = 1
             new_snake.pos[0] = self.pos[0]
             new_snake.pos[1] = self.pos[1]-1
-        
-        print(new_snake.bitmap)
-            
+                    
         print(new_snake.bitmap)
         return new_snake
 
