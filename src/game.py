@@ -17,7 +17,7 @@ class GameState:
 
         self.__board = np.full([size, size], None)
 
-        self.setPieces( pieces)
+        self.setPieces(pieces)
 
     def getSnake(self):
             return self.snake
@@ -30,6 +30,7 @@ class GameState:
     def setPieces(self, pieces):
 
         positions = []
+        self.__piece_list.clear()
                 
         for piece_info in pieces:
                 print(piece_info[0])

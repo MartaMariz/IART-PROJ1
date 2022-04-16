@@ -7,7 +7,7 @@ class Action(Enum):
     QUIT = 5
     MENU = 6
     START = 7
-    SHOW = 8
+    SHOWE = 8
     LOST = 9
     BFS = 10
     UCOST = 11
@@ -15,6 +15,8 @@ class Action(Enum):
     GS2 = 13
     AS1 = 14
     AS2 = 15
+    RULES = 16
+    SHOWH = 17
 
 class ALGORITHM(Enum):
     BFS = 1

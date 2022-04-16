@@ -4,11 +4,22 @@ from utils import Action, ALGORITHM
 
 def main():
     inGame = True
+    pieces = [['Q',0,0], ['T',1,4]]
+    game = GameState(5, pieces)
     while(inGame):
-        game = GameState(5, [['Q',0,0], ['T',1,4]])
-        search = Search(game)
         choice = mainMenu(game)
-        if choice == Action.SHOW:
+
+        if choice == Action.SHOWH or choice == Action.SHOWE:
+            if choice == Action.SHOWH:
+                del game, pieces
+                pieces = [['Q',0,0], ['T',1,4], ['H',3,2]]
+                game = GameState(6, pieces)
+            elif choice == Action.SHOWE:
+                del game, pieces
+                pieces = [['Q',0,0], ['T',1,4]]
+                game = GameState(5, pieces)
+
+            search = Search(game)
             action = puzzleMenu(game)
             if action ==  Action.START:
                 endGame = puzzle(game, search)
@@ -25,6 +36,9 @@ def main():
             elif action == Action.AS2:
                 search.beginSearch(ALGORITHM.As2)
 
+            
+        elif choice == Action.RULES:
+            action = rules(game)
         elif choice == Action.QUIT:
             break
         
@@ -66,7 +80,11 @@ def puzzle(game, search):
             if (game.evalMove(nextAction, game.snake)):
                 game.snake.updateSnake(nextAction)
 
+def rules(game):
+    return game.gui.rules()
+
 def puzzleMenu(game):
+    print(game.getPieces())
     return game.gui.puzzleMenu(game.getSize(), game.getPieces(), game.snake)
 
 def mainMenu(game):
