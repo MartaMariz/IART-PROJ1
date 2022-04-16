@@ -16,8 +16,14 @@ def main():
                     break
             elif action == Action.BFS:
                 search.beginSearch(ALGORITHM.BFS)
+            elif action == Action.UCOST:
+                search.beginSearch(ALGORITHM.UCOST)
+            elif action == Action.GS1:
+                search.beginSearch(ALGORITHM.GS1)
             elif action == Action.AS1:
                 search.beginSearch(ALGORITHM.As1)
+            elif action == Action.AS2:
+                search.beginSearch(ALGORITHM.As2)
 
         elif choice == Action.QUIT:
             break

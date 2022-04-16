@@ -97,8 +97,16 @@ class GUI:
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
                         inDisplay = False
-                    if event.key == pygame.K_b:
+                    if event.key == pygame.K_1:
                         return Action.BFS
+                    if event.key == pygame.K_2:
+                        return Action.UCOST
+                    if event.key == pygame.K_3:
+                        return Action.GS1
+                    if event.key == pygame.K_5:
+                        return Action.AS1
+                    if event.key == pygame.K_6:
+                        return Action.AS2
                     elif event.key == pygame.K_s:
                         return Action.START
 
