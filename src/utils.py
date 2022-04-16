@@ -5,17 +5,21 @@ class Action(Enum):
     LEFT = 3
     RIGHT = 4
     QUIT = 5
-    BFS = 6
-    ASTAR = 7
-    MENU = 8
-    START = 9
-    SHOW = 10
-    LOST = 11
+    MENU = 6
+    START = 7
+    SHOW = 8
+    LOST = 9
+    BFS = 10
+    UCOST = 11
+    GS1 = 12
+    GS2 = 13
+    AS1 = 14
+    AS2 = 15
 
 class ALGORITHM(Enum):
     BFS = 1
     DFS = 2
-    US = 4
-    GS = 5
+    UCOST = 4
+    GS1 = 5
     As1 = 6
     As2 = 7

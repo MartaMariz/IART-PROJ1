@@ -1,7 +1,5 @@
 from game import GameState
-from bfs import BFS
 from search import Search
-from Astar import Astar
 from utils import Action, ALGORITHM
 
 def main():
@@ -18,7 +16,7 @@ def main():
                     break
             elif action == Action.BFS:
                 search.beginSearch(ALGORITHM.BFS)
-            elif action == Action.ASTAR:
+            elif action == Action.AS1:
                 search.beginSearch(ALGORITHM.As1)
 
         elif choice == Action.QUIT:
@@ -49,8 +47,14 @@ def puzzle(game, search):
             inGame = False
         elif nextAction == Action.BFS:
             search.beginSearch(ALGORITHM.BFS)
-        elif nextAction == Action.ASTAR:
+        elif nextAction == Action.UCOST:
+            search.beginSearch(ALGORITHM.UCOST)
+        elif nextAction == Action.GS1:
+            search.beginSearch(ALGORITHM.GS1)
+        elif nextAction == Action.AS1:
             search.beginSearch(ALGORITHM.As1)
+        elif nextAction == Action.AS2:
+            search.beginSearch(ALGORITHM.As2)
             
         else:
             if (game.evalMove(nextAction, game.snake)):

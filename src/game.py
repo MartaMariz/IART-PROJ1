@@ -95,4 +95,26 @@ class GameState:
             if ( curr_num != num_attacks):
                     return 0
         return 1
+
+    def getAbsDifAttacks( self, snake):
+        snake_bitmap = snake.getBitmap()
+        if (self.__size == 5):
+            return abs( self.__piece_list[0].AttackNum( snake_bitmap) - self.__piece_list[1].AttackNum( snake_bitmap) )
+
+        else:
+            max_attacks = 0
+            min_attacks = self.__piece_list[0].AttackNum( snake_bitmap)
+
+            for piece in self.__piece_list:
+                curr_attacks = piece.AttackNum( snake_bitmap)
+                if ( curr_attacks > max_attacks):
+                        curr_attacks = max_attacks
+                elif ( curr_attacks < min_attacks):
+                        min_attacks = curr_attacks
+        
+        return abs(max_attacks - min_attacks)
+                     
+
+
+
             

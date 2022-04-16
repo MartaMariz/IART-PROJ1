@@ -67,10 +67,16 @@ class GUI:
                         if snake.right():
                             print("right")
                             return Action.RIGHT
-                    if event.key == pygame.K_b:
+                    if event.key == pygame.K_1:
                         return Action.BFS
-                    if event.key == pygame.K_a:
-                        return Action.ASTAR
+                    if event.key == pygame.K_2:
+                        return Action.UCOST
+                    if event.key == pygame.K_3:
+                        return Action.GS1
+                    if event.key == pygame.K_5:
+                        return Action.AS1
+                    if event.key == pygame.K_6:
+                        return Action.AS2
 
             self.drawBoard(size, pieces, snake)
             font = pygame.font.SysFont(None, 48)

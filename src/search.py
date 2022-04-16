@@ -18,8 +18,14 @@ class Search:
 
             if (alg == ALGORITHM.BFS):
                 curr_snake = self.bfs()
+            elif (alg == ALGORITHM.UCOST):
+                curr_snake = self.ucost()
+            elif (alg == ALGORITHM.GS1):
+                curr_snake = self.greedy1()
             elif (alg == ALGORITHM.As1):
                 curr_snake = self.as1()
+            elif (alg == ALGORITHM.As2):
+                curr_snake = self.as2()
 
 
             i+=1
@@ -30,9 +36,7 @@ class Search:
                     break
                 else:
                     continue
-
-
-            
+           
             if (curr_snake.up() and self.__game.evalMove(Action.UP, curr_snake)): 
                 new_snake = curr_snake.getNewSnake(Action.UP)
                 self.__tree = np.append(self.__tree, new_snake)
@@ -55,12 +59,55 @@ class Search:
         self.__tree = np.delete(self.__tree,0)
 
         return curr_snake
+    
+    def ucost(self):
+        index = 0
+        minhc = self.__tree[0].getCost()
+        for i in range (1,len(self.__tree)):
+            curr_hc = self.__tree[i].getCost()
+            if( curr_hc <= minhc):
+                index = i
+                minhc = curr_hc
+
+        curr_snake = self.__tree[index]            
+        self.__tree = np.delete(self.__tree,index)
+
+        return curr_snake
+    
+    def greedy1(self):
+        index = 0
+        minhc = self.__tree[0].getDistancetoEnd()
+        for i in range (1,len(self.__tree)):
+            curr_hc = self.__tree[i].getDistancetoEnd()
+            if( curr_hc <= minhc):
+                index = i
+                minhc = curr_hc
+
+        curr_snake = self.__tree[index]            
+        self.__tree = np.delete(self.__tree,index)
+
+        return curr_snake
+
 
     def as1(self):
         index = 0
         minhc = self.__tree[0].getDistancetoEnd() + self.__tree[0].getCost()
         for i in range (1,len(self.__tree)):
             curr_hc = self.__tree[i].getDistancetoEnd() + self.__tree[i].getCost()
+            if( curr_hc <= minhc):
+                index = i
+                minhc = curr_hc
+
+        curr_snake = self.__tree[index]            
+        self.__tree = np.delete(self.__tree,index)
+
+        return curr_snake
+
+    def as2(self):
+        index = 0
+        minhc = self.__game.getAbsDifAttacks(self.__tree[0]) + self.__tree[0].getCost()
+        for i in range (1,len(self.__tree)):
+            curr_hc = self.__game.getAbsDifAttacks(self.__tree[i]) + self.__tree[i].getCost()
             if( curr_hc <= minhc):
                 index = i
                 minhc = curr_hc
