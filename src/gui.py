@@ -69,6 +69,8 @@ class GUI:
                             return Action.RIGHT
                     if event.key == pygame.K_b:
                         return Action.BFS
+                    if event.key == pygame.K_a:
+                        return Action.ASTAR
 
             self.drawBoard(size, pieces, snake)
             font = pygame.font.SysFont(None, 48)

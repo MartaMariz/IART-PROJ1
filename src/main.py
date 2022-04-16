@@ -1,26 +1,31 @@
 from game import GameState
 from bfs import BFS
-from utils import Action
+from search import Search
+from Astar import Astar
+from utils import Action, ALGORITHM
 
 def main():
     inGame = True
     while(inGame):
         game = GameState(5, [['Q',0,0], ['T',1,4]])
+        search = Search(game)
         choice = mainMenu(game)
         if choice == Action.SHOW:
             action = puzzleMenu(game)
             if action ==  Action.START:
-                endGame = puzzle(game)
-
+                endGame = puzzle(game, search)
                 if endGame == Action.QUIT:
                     break
             elif action == Action.BFS:
-                BFS(game)
+                search.beginSearch(ALGORITHM.BFS)
+            elif action == Action.ASTAR:
+                search.beginSearch(ALGORITHM.As1)
+
         elif choice == Action.QUIT:
             break
         
 
-def puzzle(game):
+def puzzle(game, search):
     inGame = True
     while(inGame):
         if game.snake.endGame():
@@ -43,7 +48,9 @@ def puzzle(game):
             print("bye!")
             inGame = False
         elif nextAction == Action.BFS:
-            BFS(game)
+            search.beginSearch(ALGORITHM.BFS)
+        elif nextAction == Action.ASTAR:
+            search.beginSearch(ALGORITHM.As1)
             
         else:
             if (game.evalMove(nextAction, game.snake)):

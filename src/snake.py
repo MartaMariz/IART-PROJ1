@@ -113,7 +113,7 @@ class Snake:
             return 1
         return 1
 
-    def checkpossibleMoves(self, pieces):
+    def checkPossibleMoves(self, pieces):
         if self.up() and not Action.UP in pieces:
             return 1
         if self.down() and not Action.DOWN in pieces:
@@ -123,6 +123,9 @@ class Snake:
         if self.right() and not Action.RIGHT in pieces:
             return 1
         return 0
+
+    def getDistancetoEnd(self):
+        return self.__pos[0] + abs(self.__pos[1] - (self.board_size -1))
 
     def updateSnake(self, move):
         if (move == Action.DOWN):
