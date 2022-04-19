@@ -2,6 +2,7 @@ from game import GameState
 from search import Search
 from utils import Action, ALGORITHM
 
+
 def main():
     inGame = True
     pieces = [['Q',0,0], ['T',1,4]]
@@ -25,18 +26,19 @@ def main():
                 endGame = puzzle(game, search)
                 if endGame == Action.QUIT:
                     break
-            elif action == Action.BFS:
-                search.beginSearch(ALGORITHM.BFS)
-            elif action == Action.UCOST:
-                search.beginSearch(ALGORITHM.UCOST)
-            elif action == Action.GS1:
-                search.beginSearch(ALGORITHM.GS1)
-            elif action == Action.AS1:
-                search.beginSearch(ALGORITHM.As1)
-            elif action == Action.AS2:
-                search.beginSearch(ALGORITHM.As2)
-
-            
+            else:
+                if action == Action.BFS:
+                    sol = search.beginSearch(ALGORITHM.BFS)
+                elif action == Action.UCOST:
+                    sol = search.beginSearch(ALGORITHM.UCOST)
+                elif action == Action.GS1:
+                    sol = search.beginSearch(ALGORITHM.GS1)
+                elif action == Action.AS1:
+                    sol = search.beginSearch(ALGORITHM.As1)
+                elif action == Action.AS2:
+                    sol = search.beginSearch(ALGORITHM.As2)
+                game.gui.playPuzzle(game.getSize(), game.getPieces(), sol)  
+          
         elif choice == Action.RULES:
             action = rules(game)
         elif choice == Action.QUIT:
@@ -45,6 +47,7 @@ def main():
 
 def puzzle(game, search):
     inGame = True
+    sol =  search.beginSearch(ALGORITHM.BFS)  
     while(inGame):
         if game.snake.endGame():
             game.gui.drawBoard(game.getSize(), game.getPieces(), game.snake)
@@ -64,18 +67,7 @@ def puzzle(game, search):
         nextAction = game.gui.playPuzzle(game.getSize(), game.getPieces(), game.snake)
         if nextAction == Action.QUIT:
             print("bye!")
-            inGame = False
-        elif nextAction == Action.BFS:
-            search.beginSearch(ALGORITHM.BFS)
-        elif nextAction == Action.UCOST:
-            search.beginSearch(ALGORITHM.UCOST)
-        elif nextAction == Action.GS1:
-            search.beginSearch(ALGORITHM.GS1)
-        elif nextAction == Action.AS1:
-            search.beginSearch(ALGORITHM.As1)
-        elif nextAction == Action.AS2:
-            search.beginSearch(ALGORITHM.As2)
-            
+            inGame = False      
         else:
             if (game.evalMove(nextAction, game.snake)):
                 game.snake.updateSnake(nextAction)
