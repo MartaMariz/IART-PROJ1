@@ -61,7 +61,7 @@ class Search:
         print("Time of execution: ", end - start)
         print("Profundidade: ", curr_snake.getCost())
 
-        return curr_snake
+        self.__game.gui.playPuzzle(self.__game.getSize(), self.__game.getPieces(), curr_snake)
 
     def bfs(self):
         curr_snake = self.__tree[0]
