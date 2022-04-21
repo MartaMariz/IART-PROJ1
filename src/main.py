@@ -50,11 +50,11 @@ def puzzle(game, search):
             game.gui.drawBoard(game.getSize(), game.getPieces(), game.snake)
             print("the game is over!")
             if (game.countAttacks(game.snake)):
-                print("You win!!")
+                print("You win!")
                 return game.gui.drawFinalMsg("You win!")
             else:
-                print("You loose!")
-                return game.gui.drawFinalMsg("You loose!")
+                print("You lose!")
+                return game.gui.drawFinalMsg("You lose!")
 
         pieces = game.checkPiecesNearby()
         print(pieces)

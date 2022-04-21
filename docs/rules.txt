@@ -1,1 +1,11 @@
-Chess Snake is a type of puzzle involving the classic game 'Snake' and Chess pieces.This game consists in getting the snake from the starting point (lower-left) to the final point (upper-right), while guaranteeing that each chess piece can attack the body of the snake the same amount of times. The player must move the snake through the board using the arrows in the keyboard (up, down, left, right) to try to win this challenge!
+Chess Snake is a type of puzzle involving
+the movement rules from classic game Snake
+and the attacks of Chess pieces.
+This game consists in getting the snake from 
+the starting point (lower-left) to the 
+final point (upper-right), while guaranteeing
+that each chess piece can attack the body of
+the snake the same amount of times. The player
+must move the snake through the board using
+the arrows in the keyboard (up, down, left,
+right) to try to win this challenge!

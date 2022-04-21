@@ -26,28 +26,33 @@ class GUI:
                     print("sai")
                     inMenu = False
                 if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_e:
+                    if event.key == pygame.K_1:
                         return Action.SHOWE
-                    if event.key == pygame.K_h:
+                    if event.key == pygame.K_2:
                         return Action.SHOWH
-                    if event.key == pygame.K_r:
+                    if event.key == pygame.K_3:
                         return Action.RULES
                     elif event.key == pygame.K_ESCAPE:
                         inMenu = False
             self._screen.fill(self.BG)
-            background_image = pygame.image.load("images/stars.jpeg")
+            background_image = pygame.image.load("resources/stars.jpeg")
             self._screen.blit(background_image, (0, 0))
-            font = pygame.font.SysFont('comicsansms', 48)
-            font1 = pygame.font.SysFont('comicsansms', 72)
-            img = font1.render("Chess Snake Puzzles", True, self.MENU_TITLE, self.MENU_BOX)
-            self._screen.blit(img, (20, 100))
-            img = font.render("Press E to see easy puzzle", True, self.MENU_FONT, self.MENU_BOX)
+            font = pygame.font.Font("resources/Emulogic-zrEw.ttf", 20)
+            font1 = pygame.font.Font("resources/Emulogic-zrEw.ttf", 48)
+            font2 = pygame.font.Font("resources/Emulogic-zrEw.ttf", 13)
+            img = font1.render("Chess Snake", True, self.MENU_TITLE, self.MENU_BOX)
+            self._screen.blit(img, (30, 100))
+            img = font1.render("Puzzles", True, self.MENU_TITLE, self.MENU_BOX)
+            self._screen.blit(img, (130, 160))
+            img = font2.render("Press to choose next action:", True, self.MENU_FONT, self.MENU_BOX)
+            self._screen.blit(img, (20, self.SCREENHEIGHT-self.COMMANDS+70))
+            img = font.render("1- Easy puzzle", True, self.MENU_FONT, self.MENU_BOX)
             self._screen.blit(img, (20, self.SCREENHEIGHT-self.COMMANDS+110))
-            img = font.render("Press H to see hard puzzle", True, self.MENU_FONT, self.MENU_BOX)
+            img = font.render("2- Hard puzzle", True, self.MENU_FONT, self.MENU_BOX)
             self._screen.blit(img, (20, self.SCREENHEIGHT-self.COMMANDS+140))
-            img = font.render("Press R to see rules", True, self.MENU_FONT, self.MENU_BOX)
+            img = font.render("3- Rules", True, self.MENU_FONT, self.MENU_BOX)
             self._screen.blit(img, (20, self.SCREENHEIGHT-self.COMMANDS+170))
-            img = font.render("Press ESC to quit", True, self.MENU_FONT, self.MENU_BOX)
+            img = font.render("ESC- Quit", True, self.MENU_FONT, self.MENU_BOX)
             self._screen.blit(img, (20, self.SCREENHEIGHT-self.COMMANDS+200))
             pygame.display.update()
         return Action.QUIT
@@ -63,16 +68,18 @@ class GUI:
                     if event.key == pygame.K_SPACE:
                         inRules = False
             self._screen.fill(self.BG)
-            font = pygame.font.SysFont('comicsansms', 48)
+            font = pygame.freetype.Font("resources/Emulogic-zrEw.ttf", 12)
 
             text_file = open("docs/rules.txt", "r")
-            rules = text_file.read()
+            with open("docs/rules.txt") as text_file:
+                lines = [line.rstrip() for line in text_file]
+            label = []
 
-            font1 = pygame.freetype.SysFont('comicsansms', 24)
-            word_wrap(self._screen, rules, font1, self.MENU_FONT)
-            #img = font.render(rules, True, self.MENU_FONT, self.MENU_BOX)
-            #self._screen.blit(img, (20, 20))
-            img = font.render("Press SPACE to main menu", True, self.MENU_FONT, self.MENU_BOX)
+            for i in range(len(lines)):
+                img = font.render(lines[i], self.MENU_FONT, self.MENU_BOX)
+                self._screen.blit(img[0], (20, 20+(i*26)+(15*i)))
+            font = pygame.font.Font("resources/Emulogic-zrEw.ttf", 20)
+            img = font.render("SPACE- Main menu", True, self.MENU_FONT, self.MENU_BOX)
             self._screen.blit(img, (20, self.SCREENHEIGHT-self.COMMANDS+200))
             pygame.display.update()
         return Action.QUIT
@@ -108,10 +115,10 @@ class GUI:
                         return Action.AS1
 
             self.drawBoard(size, pieces, snake)
-            font = pygame.font.SysFont(None, 48)
-            img = font.render("Press SPACE to solve puzzle", True, self.MENU_FONT, self.MENU_BOX)
+            font = pygame.font.Font("resources/Emulogic-zrEw.ttf", 20)
+            img = font.render("SPACE- Solve puzzle", True, self.MENU_FONT, self.MENU_BOX)
             self._screen.blit(img, (0, self.SCREENHEIGHT-self.COMMANDS+20))
-            img = font.render("Press ESC to Main Menu", True, self.MENU_FONT, self.MENU_BOX)
+            img = font.render("ESC- Main Menu", True, self.MENU_FONT, self.MENU_BOX)
             self._screen.blit(img, (0, self.SCREENHEIGHT-self.COMMANDS+50))
             pygame.display.update()
 
@@ -133,31 +140,32 @@ class GUI:
                         return Action.UCOST
                     if event.key == pygame.K_3:
                         return Action.GS1
-                    if event.key == pygame.K_5:
+                    if event.key == pygame.K_4:
                         return Action.AS1
-                    if event.key == pygame.K_6:
+                    if event.key == pygame.K_5:
                         return Action.AS2
                     elif event.key == pygame.K_s:
                         return Action.START
 
             self.drawBoard(size, pieces, snake)
-            font = pygame.font.SysFont(None, 36)
-            font1 = pygame.font.SysFont(None, 48)
+            font = pygame.font.Font("resources/Emulogic-zrEw.ttf", 15)
+            font1 = pygame.font.Font("resources/Emulogic-zrEw.ttf", 28)
+            font2 = pygame.font.Font("resources/Emulogic-zrEw.ttf", 13)
             img = font1.render("Press S to start game", True, self.MENU_FONT, self.MENU_BOX)
             self._screen.blit(img, (0, self.SCREENHEIGHT-self.COMMANDS))
-            img = font.render("Press number to solve with each algorithm:", True, self.MENU_FONT, self.MENU_BOX)
+            img = font2.render("Press number to solve with each algorithm:", True, self.MENU_FONT, self.MENU_BOX)
             self._screen.blit(img, (0, self.SCREENHEIGHT-self.COMMANDS+40))
-            img = font.render("1 - BFS", True, self.MENU_FONT, self.MENU_BOX)
+            img = font.render("1- BFS", True, self.MENU_FONT, self.MENU_BOX)
             self._screen.blit(img, (0, self.SCREENHEIGHT-self.COMMANDS+70))
-            img = font.render("2 - uniform cost", True, self.MENU_FONT, self.MENU_BOX)
+            img = font.render("2- Uniform cost", True, self.MENU_FONT, self.MENU_BOX)
             self._screen.blit(img, (0, self.SCREENHEIGHT-self.COMMANDS+100))
-            img = font.render("3 - greedy search", True, self.MENU_FONT, self.MENU_BOX)
+            img = font.render("3- Greedy search", True, self.MENU_FONT, self.MENU_BOX)
             self._screen.blit(img, (0, self.SCREENHEIGHT-self.COMMANDS+130))
-            img = font.render("5 - A* - Manhattan distance", True, self.MENU_FONT, self.MENU_BOX)
+            img = font.render("4- A* - Manhattan distance", True, self.MENU_FONT, self.MENU_BOX)
             self._screen.blit(img, (0, self.SCREENHEIGHT-self.COMMANDS+160))
-            img = font.render("6 - A* - Diff between number of attacks", True, self.MENU_FONT, self.MENU_BOX)
+            img = font.render("5- A* - Diff between number of attacks", True, self.MENU_FONT, self.MENU_BOX)
             self._screen.blit(img, (0, self.SCREENHEIGHT-self.COMMANDS+190))
-            img = font.render("Press ESC to main menu", True, self.MENU_FONT, self.MENU_BOX)
+            img = font.render("ESC- Main Menu", True, self.MENU_FONT, self.MENU_BOX)
             self._screen.blit(img, (0, self.SCREENHEIGHT-self.COMMANDS+220))
             pygame.display.update()
 
@@ -186,12 +194,12 @@ class GUI:
                         return Action.MENU
 
             self._screen.fill(self.BG)
-            font = pygame.font.SysFont(None, 48)
+            font = pygame.font.Font("resources/Emulogic-zrEw.ttf", 26)
             #font1 = pygame.font.SysFont('comicsansms', 72)
             img = font.render(msg, True, self.MENU_FONT, self.MENU_BOX)
             self._screen.blit(img, (20, 20))
-            img = font.render("Press ESC to main menu", True, self.MENU_FONT, self.MENU_BOX)
-            self._screen.blit(img, (20, self.SCREENHEIGHT-self.COMMANDS+150))
+            img = font.render("ESC- Main Menu", True, self.MENU_FONT, self.MENU_BOX)
+            self._screen.blit(img, (10, self.SCREENHEIGHT-self.COMMANDS+150))
             pygame.display.update()
         return Action.QUIT
 
@@ -263,7 +271,7 @@ class Tower_sprite(Piece_sprite):
         super().__init__(size, obj)
         self.image = pygame.Surface([size, size])
         
-        image1_not_scaled = pygame.image.load("images/tower.png").convert_alpha()
+        image1_not_scaled = pygame.image.load("resources/tower.png").convert_alpha()
         
         self.image = pygame.transform.scale(image1_not_scaled, [size, size])
  
@@ -277,7 +285,7 @@ class Queen_sprite(Piece_sprite):
         super().__init__(size, obj)
         self.image = pygame.Surface([size, size])
         
-        image1_not_scaled = pygame.image.load("images/queen.png").convert_alpha()
+        image1_not_scaled = pygame.image.load("resources/queen.png").convert_alpha()
         
         self.image = pygame.transform.scale(image1_not_scaled, [size, size])
  
@@ -291,7 +299,7 @@ class Horse_sprite(Piece_sprite):
         super().__init__(size, obj)
         self.image = pygame.Surface([size, size])
         
-        image1_not_scaled = pygame.image.load("images/horse.png").convert_alpha()
+        image1_not_scaled = pygame.image.load("resources/horse.png").convert_alpha()
         
         self.image = pygame.transform.scale(image1_not_scaled, [size, size])
  
@@ -305,7 +313,7 @@ class Bishop_sprite(Piece_sprite):
         super().__init__(size, obj)
         self.image = pygame.Surface([size, size])
         
-        image1_not_scaled = pygame.image.load("images/bishop.png").convert_alpha()
+        image1_not_scaled = pygame.image.load("resources/bishop.png").convert_alpha()
         
         self.image = pygame.transform.scale(image1_not_scaled, [size, size])
  
@@ -319,7 +327,7 @@ class King_sprite(Piece_sprite):
         super().__init__(size, obj)
         self.image = pygame.Surface([size, size])
         
-        image1_not_scaled = pygame.image.load("images/king.png").convert_alpha()
+        image1_not_scaled = pygame.image.load("resources/king.png").convert_alpha()
         
         self.image = pygame.transform.scale(image1_not_scaled, [size, size])
  
@@ -327,22 +335,3 @@ class King_sprite(Piece_sprite):
 
         self.rect.x = self._col*size
         self.rect.y = self._line*size
-
-def word_wrap(surf, text, font, color=(0, 0, 0)):
-    font.origin = True
-    words = text.split(' ')
-    width, height = surf.get_size()
-    line_spacing = font.get_sized_height() + 2
-    x, y = 0, line_spacing
-    space = font.get_rect(' ')
-    for word in words:
-        bounds = font.get_rect(word)
-        if x + bounds.width + bounds.x >= width:
-            x, y = 0, y + line_spacing
-        if x + bounds.width + bounds.x >= width:
-            raise ValueError("word too wide for the surface")
-        if y + bounds.height - bounds.y >= height:
-            raise ValueError("text to long for the surface")
-        font.render_to(surf, (x, y), None, color)
-        x += bounds.width + space.width
-    return x, y
