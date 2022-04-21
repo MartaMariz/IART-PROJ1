@@ -30,18 +30,17 @@ def main():
                     break
             else:
                 if action == Action.BFS:
-                    sol = search.beginSearch(ALGORITHM.BFS)
+                    search.beginSearch(ALGORITHM.BFS)
                 elif action == Action.UCOST:
-                    sol = search.beginSearch(ALGORITHM.UCOST)
+                    search.beginSearch(ALGORITHM.UCOST)
                 elif action == Action.GS1:
-                    sol = search.beginSearch(ALGORITHM.GS1)
+                    search.beginSearch(ALGORITHM.GS1)
                 elif action == Action.AS1:
-                    sol = search.beginSearch(ALGORITHM.As1)
+                    search.beginSearch(ALGORITHM.As1)
                 elif action == Action.AS2:
-                    sol = search.beginSearch(ALGORITHM.As2)
+                    search.beginSearch(ALGORITHM.As2)            
 
-                game.gui.playPuzzle(game.getSize(), game.getPieces(), sol)
-                        
+            
         elif choice == Action.RULES:
             action = rules(game)
         elif choice == Action.QUIT:
