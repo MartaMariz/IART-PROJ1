@@ -15,7 +15,7 @@ class GameState:
 
         self.snake = Snake(self.__size)
 
-        self.__board = np.full([size, size], None)
+        self.__board = np.full([size, size], 0)
 
         self.setPieces(pieces)
 
@@ -47,7 +47,7 @@ class GameState:
 
                 positions.append([piece_info[1], piece_info[2]])
                 self.__piece_list.append( curr_piece)
-                self.__board[piece_info[2]][piece_info[1]] = curr_piece
+                self.__board[piece_info[2]][piece_info[1]] = 1
         
         for piece in self.__piece_list:
                 piece.setAttack(positions)
@@ -55,35 +55,35 @@ class GameState:
         
     def evalMove(self, move, snake):
         if (move == Action.DOWN):
-            if (self.__board[snake.getLine()+1][snake.getCol()] == None):
+            if (self.__board[snake.getLine()+1][snake.getCol()] == 0):
                 return 1
             return 0
         if (move == Action.UP):
-            if (self.__board[snake.getLine()-1][snake.getCol()] == None):
+            if (self.__board[snake.getLine()-1][snake.getCol()] == 0):
                 return 1
             return 0
         if (move == Action.RIGHT):
-            if (self.__board[snake.getLine()][snake.getCol()+1] == None):
+            if (self.__board[snake.getLine()][snake.getCol()+1] == 0):
                 return 1
             return 0
         if (move == Action.LEFT):
-            if (self.__board[snake.getLine()][snake.getCol()-1] == None):
+            if (self.__board[snake.getLine()][snake.getCol()-1] == 0):
                 return 1
             return 0
         
     def checkPiecesNearby(self):
         vec = []
         if self.snake.getLine()+1 < self.__size:
-                if (self.__board[self.snake.getLine()+1][self.snake.getCol()] != None):
+                if (self.__board[self.snake.getLine()+1][self.snake.getCol()] != 0):
                         vec.append(Action.DOWN)
         if self.snake.getLine()-1 >= 0:
-                if (self.__board[self.snake.getLine()-1][self.snake.getCol()] != None):
+                if (self.__board[self.snake.getLine()-1][self.snake.getCol()] != 0):
                         vec.append(Action.UP)
         if self.snake.getCol()+1 < self.__size:
-                if (self.__board[self.snake.getLine()][self.snake.getCol()+1] != None):
+                if (self.__board[self.snake.getLine()][self.snake.getCol()+1] != 0):
                         vec.append(Action.RIGHT)
         if self.snake.getCol()-1 >= 0:
-                if (self.__board[self.snake.getLine()][self.snake.getCol()-1] != None):
+                if (self.__board[self.snake.getLine()][self.snake.getCol()-1] != 0):
                         vec.append(Action.LEFT)
         return vec
 
@@ -114,8 +114,5 @@ class GameState:
                         min_attacks = curr_attacks
         
         return abs(max_attacks - min_attacks)
-                     
 
-
-
-            
+                                 

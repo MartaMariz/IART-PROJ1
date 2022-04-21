@@ -1,6 +1,7 @@
 from game import GameState
 from utils import Action, ALGORITHM
 import numpy as np
+import time 
 
 
 class Search:
@@ -11,9 +12,12 @@ class Search:
     def beginSearch(self, alg):
         i = 0
 
+        start = time.time()
+        
+
         while (1):
             if len(self.__tree) == 0:
-                break
+
                 return Action.LOST
 
             if (alg == ALGORITHM.BFS):
@@ -50,9 +54,14 @@ class Search:
                 new_snake = curr_snake.getNewSnake(Action.RIGHT)
                 self.__tree = np.append(self.__tree, new_snake)
 
-        print(i)
+        print("Number of nodes explored: ", i)
         self.__tree = [ self.__game.getSnake()]
-        self.__game.gui.playPuzzle(self.__game.getSize(), self.__game.getPieces(), curr_snake)
+
+        end = time.time()
+        print("Time of execution: ", end - start)
+        print("Profundidade: ", curr_snake.getCost())
+
+        return curr_snake
 
     def bfs(self):
         curr_snake = self.__tree[0]
