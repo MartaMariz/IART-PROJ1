@@ -6,7 +6,7 @@ import pygame.freetype
 class GUI:
     BG = (0,0,0)
     DIV = (255,255,255)
-    SNAKE = (188,186,205)
+    SNAKE = (28, 29, 83)
     MENU_BOX = (4,6,21)
     MENU_TITLE = (97,106,154)
     MENU_FONT = (64,72,101)
