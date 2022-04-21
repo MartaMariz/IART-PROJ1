@@ -21,7 +21,7 @@ class Piece:
         
         for l in range (self._board_size):
             for c in range (self._board_size):
-                if (snake[l][c] & self._bitmap[l][c]):
+                if (snake[l][c] and self._bitmap[l][c]):
                     num += 1
         return num
 

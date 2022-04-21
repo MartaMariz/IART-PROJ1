@@ -17,7 +17,7 @@ class Search:
 
         while (1):
             if len(self.__tree) == 0:
-
+                print("não há sol")
                 return Action.LOST
 
             if (alg == ALGORITHM.BFS):
