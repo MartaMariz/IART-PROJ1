@@ -41,9 +41,7 @@ def main():
                     sol = search.beginSearch(ALGORITHM.As2)
 
                 game.gui.playPuzzle(game.getSize(), game.getPieces(), sol)
-            
-
-            
+                        
         elif choice == Action.RULES:
             action = rules(game)
         elif choice == Action.QUIT:
