@@ -102,13 +102,13 @@ class GameState:
             return abs( self.__piece_list[0].AttackNum( snake_bitmap) - self.__piece_list[1].AttackNum( snake_bitmap) )
 
         else:
-            max_attacks = 0
+            max_attacks = -1
             min_attacks = self.__piece_list[0].AttackNum( snake_bitmap)
 
             for piece in self.__piece_list:
                 curr_attacks = piece.AttackNum( snake_bitmap)
                 if ( curr_attacks > max_attacks):
-                        curr_attacks = max_attacks
+                        max_attacks = curr_attacks
                 elif ( curr_attacks < min_attacks):
                         min_attacks = curr_attacks
         
