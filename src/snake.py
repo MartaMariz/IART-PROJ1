@@ -147,12 +147,11 @@ class Snake:
         new_snake.updateSnake(move)
        
                     
-        print(new_snake.getBitmap())
+        #print(new_snake.getBitmap())
         return new_snake
 
     def endGame(self):
         if self.__pos[0] == 0 and self.__pos[1] == self.board_size-1: 
-            print("tf")
             return 1
         return 0
 

@@ -10,14 +10,14 @@ class Search:
         self.__game = game
     
     def beginSearch(self, alg):
+        print(alg)
         i = 0
-
         start = time.time()
         
 
         while (1):
             if len(self.__tree) == 0:
-
+                print("tree 0")
                 return Action.LOST
 
             if (alg == ALGORITHM.BFS):
@@ -61,7 +61,7 @@ class Search:
         print("Time of execution: ", end - start)
         print("Profundidade: ", curr_snake.getCost())
 
-        self.__game.gui.playPuzzle(self.__game.getSize(), self.__game.getPieces(), curr_snake)
+        return curr_snake
 
     def bfs(self):
         curr_snake = self.__tree[0]

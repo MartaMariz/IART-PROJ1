@@ -23,8 +23,7 @@ class GUI:
         while (inMenu):
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    print("sai")
-                    inMenu = False
+                    return Action.QUIT
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_1:
                         return Action.SHOWE
@@ -33,7 +32,7 @@ class GUI:
                     if event.key == pygame.K_3:
                         return Action.RULES
                     elif event.key == pygame.K_ESCAPE:
-                        inMenu = False
+                        return Action.QUIT
             self._screen.fill(self.BG)
             background_image = pygame.image.load("resources/stars.jpeg")
             self._screen.blit(background_image, (0, 0))
@@ -55,15 +54,14 @@ class GUI:
             img = font.render("ESC- Quit", True, self.MENU_FONT, self.MENU_BOX)
             self._screen.blit(img, (self.SCREENWIDTH/5, self.SCREENHEIGHT/3+200))
             pygame.display.update()
-        return Action.QUIT
+        return Action.MENU
 
     def rules(self):
         inRules = True
         while (inRules):
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    print("sai")
-                    inRules = False
+                    return Action.QUIT
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE:
                         inRules = False
@@ -82,7 +80,8 @@ class GUI:
             img = font.render("SPACE- Main menu", True, self.MENU_FONT, self.MENU_BOX)
             self._screen.blit(img, (20, self.SCREENHEIGHT-self.COMMANDS+200))
             pygame.display.update()
-        return Action.QUIT
+
+        return Action.MENU
 
 
     def playPuzzle(self, size, pieces, snake):
@@ -91,25 +90,21 @@ class GUI:
         while inGame:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    inGame = False
+                    return Action.QUIT
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
                         inGame = False
                     if event.key == pygame.K_UP:
                         if snake.up():
-                            print("up")
                             return Action.UP
                     if event.key == pygame.K_DOWN:
                         if snake.down():
-                            print("down")
                             return Action.DOWN
                     if event.key == pygame.K_LEFT:
                         if snake.left():
-                            print("left")
                             return Action.LEFT    
                     if event.key == pygame.K_RIGHT:
                         if snake.right():
-                            print("right")
                             return Action.RIGHT
                     if event.key == pygame.K_SPACE:
                         return Action.AS1
@@ -122,15 +117,38 @@ class GUI:
             self._screen.blit(img, (0, self.SCREENHEIGHT-self.COMMANDS+50))
             pygame.display.update()
 
-        return Action.QUIT
+        return Action.MENU
+        
+    def showResult(self, size, pieces, snake):
+        global inGame
+        inGame = True
+        while inGame:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    return Action.QUIT
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        inGame = False
+                    if event.key == pygame.K_SPACE:
+                        return Action.START
 
+            self.drawBoard(size, pieces, snake)
+            font = pygame.font.Font("resources/Emulogic-zrEw.ttf", 20)
+            img = font.render("SPACE- Try again", True, self.MENU_FONT, self.MENU_BOX)
+            self._screen.blit(img, (0, self.SCREENHEIGHT-self.COMMANDS+20))
+            img = font.render("ESC- Main Menu", True, self.MENU_FONT, self.MENU_BOX)
+            self._screen.blit(img, (0, self.SCREENHEIGHT-self.COMMANDS+50))
+            pygame.display.update()
+
+        return Action.MENU
+        
     def puzzleMenu(self, size, pieces, snake):
         print(pieces)
         inDisplay = True
         while inDisplay:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    inDisplay = False
+                    return Action.QUIT
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
                         inDisplay = False
@@ -144,14 +162,14 @@ class GUI:
                         return Action.AS1
                     if event.key == pygame.K_5:
                         return Action.AS2
-                    elif event.key == pygame.K_s:
+                    elif event.key == pygame.K_SPACE:
                         return Action.START
 
             self.drawBoard(size, pieces, snake)
             font = pygame.font.Font("resources/Emulogic-zrEw.ttf", 15)
             font1 = pygame.font.Font("resources/Emulogic-zrEw.ttf", 28)
             font2 = pygame.font.Font("resources/Emulogic-zrEw.ttf", 13)
-            img = font1.render("Press S to start game", True, self.MENU_FONT, self.MENU_BOX)
+            img = font1.render("SPACE- Start game", True, self.MENU_FONT, self.MENU_BOX)
             self._screen.blit(img, (0, self.SCREENHEIGHT-self.COMMANDS))
             img = font2.render("Press number to solve with each algorithm:", True, self.MENU_FONT, self.MENU_BOX)
             self._screen.blit(img, (0, self.SCREENHEIGHT-self.COMMANDS+40))
@@ -169,7 +187,7 @@ class GUI:
             self._screen.blit(img, (0, self.SCREENHEIGHT-self.COMMANDS+220))
             pygame.display.update()
 
-        return Action.QUIT    
+        return Action.MENU    
 
     def drawBoard(self, size, pieces, snake):
         self._screen.fill(self.BG)
@@ -188,20 +206,20 @@ class GUI:
         while (inMsg):
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    inMsg = False
+                    return Action.QUIT
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
-                        return Action.MENU
+                        inMsg = False
 
             self._screen.fill(self.BG)
             font = pygame.font.Font("resources/Emulogic-zrEw.ttf", 26)
             #font1 = pygame.font.SysFont('comicsansms', 72)
             img = font.render(msg, True, self.MENU_FONT, self.MENU_BOX)
-            self._screen.blit(img, (self.SCREENWIDTH/5, self.SCREENHEIGHT/5))
+            self._screen.blit(img, (self.SCREENWIDTH/5-len(msg)/2, self.SCREENHEIGHT/3))
             img = font.render("ESC- Main Menu", True, self.MENU_FONT, self.MENU_BOX)
             self._screen.blit(img, (10, self.SCREENHEIGHT-self.COMMANDS+150))
             pygame.display.update()
-        return Action.QUIT
+        return Action.MENU
 
     def draw6x6(self):
         pygame.draw.line(self._screen, self.DIV, [0,100], [self.SCREENWIDTH,100], 3)

@@ -14,37 +14,50 @@ def main():
         if choice == Action.SHOWH or choice == Action.SHOWE:
             if choice == Action.SHOWH:
                 del game, pieces
-                pieces= prepare_game(6)
+                pieces = prepare_game(6)
                 print(pieces)
                 game = GameState(6, pieces)
             elif choice == Action.SHOWE:
                 del game, pieces
-                pieces= prepare_game(5)
+                pieces = prepare_game(5)
                 game = GameState(5, pieces)
 
             search = Search(game)
             action = puzzleMenu(game)
-            if action ==  Action.START:
+            if action == Action.START:
                 endGame = puzzle(game, search)
                 if endGame == Action.QUIT:
                     break
+                elif endGame == Action.MENU:
+                    continue
+            elif action == Action.MENU:
+                continue
             else:
                 if action == Action.BFS:
-                    search.beginSearch(ALGORITHM.BFS)
+                    result = search.beginSearch(ALGORITHM.BFS)
                 elif action == Action.UCOST:
-                    search.beginSearch(ALGORITHM.UCOST)
+                    result = search.beginSearch(ALGORITHM.UCOST)
                 elif action == Action.GS1:
-                    search.beginSearch(ALGORITHM.GS1)
+                    result = search.beginSearch(ALGORITHM.GS1)
                 elif action == Action.AS1:
-                    search.beginSearch(ALGORITHM.As1)
+                     result = search.beginSearch(ALGORITHM.As1)
                 elif action == Action.AS2:
-                    search.beginSearch(ALGORITHM.As2)            
+                     result = search.beginSearch(ALGORITHM.As2)        
+                print(result)
+                if result == Action.LOST:
+                    return game.gui.drawFinalMsg("You lose!")
+                else: 
+                    action = game.gui.showResult(game.getSize(), game.getPieces(), result)
+                    if action == Action.MENU:
+                        continue
 
             
         elif choice == Action.RULES:
-            action = rules(game)
+            action = rules(game) 
         elif choice == Action.QUIT:
             break
+        if action == Action.QUIT:
+                break
         
 
 def puzzle(game, search):
@@ -52,7 +65,6 @@ def puzzle(game, search):
     while(inGame):
         if game.snake.endGame():
             game.gui.drawBoard(game.getSize(), game.getPieces(), game.snake)
-            print("the game is over!")
             if (game.countAttacks(game.snake)):
                 print("You win!")
                 return game.gui.drawFinalMsg("You win!")
@@ -61,24 +73,19 @@ def puzzle(game, search):
                 return game.gui.drawFinalMsg("You lose!")
 
         pieces = game.checkPiecesNearby()
-        print(pieces)
         if not game.snake.checkPossibleMoves(pieces):
-            print("No moves available")
-            inGame = False
+            return game.gui.drawFinalMsg("No movements left!")
         nextAction = game.gui.playPuzzle(game.getSize(), game.getPieces(), game.snake)
         if nextAction == Action.QUIT:
-            print("bye!")
-            inGame = False
-        elif nextAction == Action.BFS:
-            search.beginSearch(ALGORITHM.BFS)
-        elif nextAction == Action.UCOST:
-            search.beginSearch(ALGORITHM.UCOST)
-        elif nextAction == Action.GS1:
-            search.beginSearch(ALGORITHM.GS1)
+            return Action.QUIT
+        elif nextAction == Action.MENU:
+            return Action.MENU
         elif nextAction == Action.AS1:
-            search.beginSearch(ALGORITHM.As1)
-        elif nextAction == Action.AS2:
-            search.beginSearch(ALGORITHM.As2)
+            result = search.beginSearch(ALGORITHM.As1)
+            print(result)
+            if result == Action.LOST:
+                return game.gui.drawFinalMsg("You lose!")
+            else: return game.gui.showResult(game.getSize(), game.getPieces(), result)
             
         else:
             if (game.evalMove(nextAction, game.snake)):
@@ -88,7 +95,6 @@ def rules(game):
     return game.gui.rules()
 
 def puzzleMenu(game):
-    print(game.getPieces())
     return game.gui.puzzleMenu(game.getSize(), game.getPieces(), game.snake)
 
 def mainMenu(game):
@@ -96,26 +102,26 @@ def mainMenu(game):
 
 def prepare_game(level):
     boards = {
-        "board1": [['T', 1, 1], ['Q', 1, 3]],
+        "board1": [['T', 1, 1], ['K', 1, 3]],
         "board2": [['B', 2, 1], ['H', 1, 4]],
-        "board3": [['K', 0, 0], ['T', 1, 4]],
-        "board4": [['B', 1, 1], ['Q', 2, 2]],
-        "board5": [['K', 1, 1], ['H', 3, 4]],
+        "board3": [['Q', 0, 0], ['T', 1, 4]],
+        "board4": [['B', 1, 1], ['K', 2, 2]],
+        "board5": [['Q', 1, 1], ['H', 3, 4]],
         "board6": [['B', 2, 4], ['T', 4, 3]],
-        "board7": [['H', 3, 1], ['Q', 4, 3]],
-        "board8": [['B', 4, 1], ['K', 1, 2]],
+        "board7": [['H', 3, 1], ['K', 4, 3]],
+        "board8": [['B', 4, 1], ['Q', 1, 2]],
         "board9": [['T', 4, 3], ['H', 4, 4]],
-        "board10": [['K', 1, 0], ['K', 1, 4]],
-        "board11": [['B', 4, 1], ['T', 1, 5], ['K', 5, 5]],
-        "board12": [['T', 0, 3], ['H', 3, 3], ['Q', 2, 4]],
-        "board13": [['B', 4, 1], ['H', 1, 2], ['K', 4, 4]],
-        "board14": [['K', 2, 0], ['T', 5, 1], ['Q', 4, 3]],
-        "board15": [['B', 0, 2], ['T', 4, 3], ['Q', 1, 5]],
-        "board16": [['K', 3, 0], ['H', 3, 3], ['T', 2, 4]],
-        "board17": [['Q', 3, 0], ['H', 2, 4], ['B', 4, 3]],
-        "board18": [['K', 1, 1], ['B', 4, 1], ['Q', 3, 4]],
+        "board10": [['K', 1, 0], ['Q', 1, 4]],
+        "board11": [['B', 4, 1], ['T', 1, 5], ['Q', 5, 5]],
+        "board12": [['T', 0, 3], ['H', 3, 3], ['K', 2, 4]],
+        "board13": [['B', 4, 1], ['H', 1, 2], ['Q', 4, 4]],
+        "board14": [['Q', 2, 0], ['T', 5, 1], ['K', 4, 3]],
+        "board15": [['B', 0, 2], ['T', 4, 3], ['K', 1, 5]],
+        "board16": [['Q', 3, 0], ['H', 3, 3], ['T', 2, 4]],
+        "board17": [['K', 3, 0], ['H', 2, 4], ['B', 4, 3]],
+        "board18": [['Q', 1, 1], ['B', 4, 1], ['K', 3, 4]],
         "board19": [['B', 0, 2], ['H', 2, 1], ['T', 4, 4]],
-        "board20": [['H', 1, 2], ['Q', 2, 3], ['K', 2, 5]]
+        "board20": [['H', 1, 2], ['K', 2, 3], ['Q', 2, 5]]
     }
 
     if level == 5:

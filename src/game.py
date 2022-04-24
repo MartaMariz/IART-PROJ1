@@ -33,7 +33,6 @@ class GameState:
         self.__piece_list.clear()
                 
         for piece_info in pieces:
-                print(piece_info[0])
                 if (piece_info[0] == 'H'):
                         curr_piece = Horse(piece_info[1], piece_info[2], self.__size)
                 elif (piece_info[0] == 'Q'):
@@ -51,7 +50,7 @@ class GameState:
         
         for piece in self.__piece_list:
                 piece.setAttack(positions)
-                piece.printAttack()
+                #piece.printAttack()
         
     def evalMove(self, move, snake):
         if (move == Action.DOWN):

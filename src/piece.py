@@ -33,9 +33,9 @@ class Piece:
     def getAttack(self):
         return self._bitmap
     
-    def printAttack(self):
-        print("attack")
-        print(self._bitmap)
+    #def printAttack(self):
+     #   print("attack")
+      #  print(self._bitmap)
 
             
             
