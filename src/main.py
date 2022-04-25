@@ -115,6 +115,7 @@ def puzzleMenu(game):
 def mainMenu(game):
     return game.gui.mainMenu()
 
+
 def prepare_game(level):
     boards = {
         "board1": [['T', 1, 1], ['K', 1, 3]],
@@ -141,11 +142,14 @@ def prepare_game(level):
 
     if level == 5:
         number_board = random.randint(1, 10)
+        pieces = boards["board"+str(5)]
+
     if level == 6:
         number_board = random.randint(11, 20)
+        pieces = boards["board"+str(15)]
+
 
     #pieces = boards["board"+str(number_board)]
-    pieces = boards["board"+str(15)]
 
     print(pieces)
 
