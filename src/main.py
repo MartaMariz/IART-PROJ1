@@ -129,7 +129,9 @@ def prepare_game(level):
     if level == 6:
         number_board = random.randint(11, 20)
 
-    pieces = boards["board"+str(number_board)]
+    #pieces = boards["board"+str(number_board)]
+    pieces = boards["board"+str(15)]
+
     print(pieces)
 
     return pieces

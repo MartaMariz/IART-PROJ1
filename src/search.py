@@ -2,6 +2,11 @@ from game import GameState
 from utils import Action, ALGORITHM
 import numpy as np
 import time 
+import shutil
+path = "./src"
+  
+
+
 
 
 class Search:
@@ -60,6 +65,11 @@ class Search:
         end = time.time()
         print("Time of execution: ", end - start)
         print("Profundidade: ", curr_snake.getCost())
+
+        stat = shutil.disk_usage(path)
+        
+        print("Disk usage statistics:")
+        print(stat)
 
         return curr_snake
 

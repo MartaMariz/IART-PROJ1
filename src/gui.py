@@ -13,6 +13,7 @@ class GUI:
     SCREENWIDTH = 600
     SCREENHEIGHT = 850
     COMMANDS = 250
+    #**
     
     def __init__(self):
         pygame.init()
