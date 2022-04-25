@@ -14,13 +14,16 @@ class GUI:
     SCREENWIDTH = 600
     SCREENHEIGHT = 850
     COMMANDS = 250
-    #**
     
     def __init__(self):
         pygame.init()
         self._screen = pygame.display.set_mode((self.SCREENWIDTH,self.SCREENHEIGHT))
 
     def mainMenu(self):
+        """Function responsible for displaying the main menu
+        Returns:
+            Action(Enum): the action chosen by the user
+        """
         inMenu = True
         while (inMenu):
             for event in pygame.event.get():
@@ -59,6 +62,11 @@ class GUI:
         return Action.MENU
 
     def rules(self):
+        """Function responsible for displaying the rules
+
+        Returns:
+            Action(Enum): the action chosen by the user
+        """
         inRules = True
         while (inRules):
             for event in pygame.event.get():
@@ -87,6 +95,17 @@ class GUI:
 
 
     def playPuzzle(self, size, pieces, snake):
+        """Function responsible for displaying the board and expecting next action - 
+        a move of the snake, a request for the solution (A*) or quitting
+
+        Args:
+            size (int): size of the board
+            pieces (vector): vector of chess pieces
+            snake (object Snake): current Snake
+
+        Returns:
+            Action(Enum): the action chosen by the user
+        """
         global inGame
         inGame = True
         while inGame:
@@ -122,6 +141,16 @@ class GUI:
         return Action.MENU
         
     def showResult(self, size, pieces, snake):
+        """Fuction responsible for displaying the result after solving with an algorithm
+
+        Args:
+            size (int): size of the board
+            pieces (vector): vector of chess pieces
+            snake (object Snake): current Snake
+
+        Returns:
+            Action(Enum): the action chosen by the user
+        """
         global inGame
         inGame = True
         while inGame:
@@ -145,6 +174,17 @@ class GUI:
         return Action.MENU
         
     def puzzleMenu(self, size, pieces, snake):
+        """Function responsible for displaying the menu when looking at a puzzle - 
+        either trying to solve it, solving with an algorithm
+
+        Args:
+            size (int): size of the board
+            pieces (vector): vector of chess pieces
+            snake (object Snake): current Snake
+
+        Returns:
+            Action(Enum): the action chosen by the user
+        """
         inDisplay = True
         while inDisplay:
             for event in pygame.event.get():
@@ -191,6 +231,13 @@ class GUI:
         return Action.MENU    
 
     def drawBoard(self, size, pieces, snake):
+        """Function responsible for displaying the board whenever a bigger function such as puzzleMenu or showResult is called
+
+        Args:
+            size (int): size of the board
+            pieces (vector): vector of chess pieces
+            snake (object Snake): current Snake
+        """
         self._screen.fill(self.BG)
         self.size = size
         if size == 6:
@@ -203,6 +250,14 @@ class GUI:
 
 
     def drawFinalMsg(self, msg):
+        """Function responsible for displaying the final message
+
+        Args:
+            msg (String): final message after the game is over
+
+        Returns:
+            Action(Enum): the action chosen by the user
+        """
         inMsg = True
         while (inMsg):
             for event in pygame.event.get():
@@ -227,6 +282,8 @@ class GUI:
         return Action.MENU
 
     def draw6x6(self):
+        """Function that draws the lines for a 6x6 board
+        """
         pygame.draw.line(self._screen, self.DIV, [0,100], [self.SCREENWIDTH,100], 3)
         pygame.draw.line(self._screen, self.DIV, [0,200], [self.SCREENWIDTH,200], 3)
         pygame.draw.line(self._screen, self.DIV, [0,300], [self.SCREENWIDTH,300], 3)
@@ -240,6 +297,8 @@ class GUI:
         pygame.draw.line(self._screen, self.DIV, [500,0], [500,self.SCREENHEIGHT-self.COMMANDS], 3)
 
     def draw5x5(self):
+        """Function that draws the lines for a 5x5 board
+        """
         pygame.draw.line(self._screen, self.DIV, [0,120], [self.SCREENWIDTH,120], 3)
         pygame.draw.line(self._screen, self.DIV, [0,240], [self.SCREENWIDTH,240], 3)
         pygame.draw.line(self._screen, self.DIV, [0,360], [self.SCREENWIDTH,360], 3)
@@ -251,6 +310,11 @@ class GUI:
         pygame.draw.line(self._screen, self.DIV, [480,0], [480,self.SCREENHEIGHT-self.COMMANDS], 3)
 
     def setPieces(self, vec):
+        """Function that creates the sprites for each piece and draws it in the screen
+
+        Args:
+            vec (vector): vector with the Piece objects
+        """
         sprites = pygame.sprite.Group()
         if self.size == 6:
             pieceSize = 100
@@ -270,6 +334,11 @@ class GUI:
         sprites.draw(self._screen)
 
     def setSnake(self, snake):
+        """Function that creates the rectangles that represent the snake in the board and draws them
+
+        Args:
+            snake (object Snake): current Snake created in the game
+        """
         size = snake.getBoardSize()
         if size == 5:
             space = 120
@@ -282,6 +351,12 @@ class GUI:
 
 
 class Piece_sprite(pygame.sprite.Sprite):
+    """Class that represents the chess pieces as sprites in the screen. 
+    Each piece is loaded with an image representing the chess piece (King, Queen, Bishop, Tower, Horse)
+
+    Args:
+        pygame (Sprite): Superclass
+    """
     _width = 0
     _height = 0
     def __init__(self, size, obj):

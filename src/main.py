@@ -4,6 +4,8 @@ from utils import Action, ALGORITHM
 import random
 
 def main():
+    """Main function - creates the object game and has the main while cycle that breaks only when the user chooses to leave
+    """
     inGame = True
     pieces = []
     game = GameState(5, pieces)
@@ -20,7 +22,7 @@ def main():
                 del game, pieces
                 pieces = prepare_game(5)
                 game = GameState(5, pieces)
-            action = playGame(game)
+            action = showBoard(game)
             if action == Action.QUIT:
                 break
             elif action == Action.MENU:
@@ -36,6 +38,16 @@ def main():
         
 
 def puzzle(game, search):
+    """Function called when the user chooses to solve the puzzle. It handles the flow of the game and the stopping conditions, as 
+    well as solving with A* mid-game
+
+    Args:
+        game (object GameState): object that contains all the information about this game
+        search (object Search): object that contains all the information about the search of this game
+
+    Returns:
+        Action(Enum): next action
+    """
     inGame = True
     while(inGame):
         if game.snake.endGame():
@@ -64,7 +76,16 @@ def puzzle(game, search):
                 game.snake.updateSnake(nextAction)
 
 
-def playGame(game):
+def showBoard(game):
+    """Function responsible for showing a puzzle, the actions regarding solving it with a specific algorithm 
+    and restarting the puzzle after it is solved or the user won/lost
+
+    Args:
+        game (object GameState): object that contains all the information about this game
+
+    Returns:
+        Action(Enum): next action 
+    """
     inGame = True
     while(inGame):
         search = Search(game)
@@ -111,6 +132,14 @@ def mainMenu(game):
 
 
 def prepare_game(level):
+    """Function that prepares the game by choosing a random set of pieces considering the size of the board
+
+    Args:
+        level (int): level of the board - either 5 or 6 for easy and hard levels, respectively
+
+    Returns:
+        vec: pieces chosen to be in the puzzle
+    """
     boards = {
         "board1": [['T', 1, 1], ['K', 1, 3]],
         "board2": [['B', 2, 1], ['H', 1, 4]],
