@@ -6,9 +6,6 @@ import shutil
 path = "./src"
   
 
-
-
-
 class Search:
     def __init__(self, game):
         self.__tree = np.array([ game.getSnake() ]) 

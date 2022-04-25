@@ -21,35 +21,11 @@ def main():
                 del game, pieces
                 pieces = prepare_game(5)
                 game = GameState(5, pieces)
-
-            search = Search(game)
-            action = puzzleMenu(game)
-            if action == Action.START:
-                endGame = puzzle(game, search)
-                if endGame == Action.QUIT:
-                    break
-                elif endGame == Action.MENU:
-                    continue
+            action = playGame(game)
+            if action == Action.QUIT:
+                break
             elif action == Action.MENU:
                 continue
-            else:
-                if action == Action.BFS:
-                    result = search.beginSearch(ALGORITHM.BFS)
-                elif action == Action.UCOST:
-                    result = search.beginSearch(ALGORITHM.UCOST)
-                elif action == Action.GS1:
-                    result = search.beginSearch(ALGORITHM.GS1)
-                elif action == Action.AS1:
-                     result = search.beginSearch(ALGORITHM.As1)
-                elif action == Action.AS2:
-                     result = search.beginSearch(ALGORITHM.As2)        
-                print(result)
-                if result == Action.LOST:
-                    return game.gui.drawFinalMsg("You lose!")
-                else: 
-                    action = game.gui.showResult(game.getSize(), game.getPieces(), result)
-                    if action == Action.MENU:
-                        continue
 
             
         elif choice == Action.RULES:
@@ -90,6 +66,45 @@ def puzzle(game, search):
         else:
             if (game.evalMove(nextAction, game.snake)):
                 game.snake.updateSnake(nextAction)
+
+
+def playGame(game):
+    inGame = True
+    initial_game = game
+    while(inGame):
+        search = Search(game)
+        action = puzzleMenu(game)
+        if action == Action.START:
+            endGame = puzzle(game, search)
+            if endGame == Action.QUIT:
+                return Action.QUIT
+            elif endGame == Action.MENU:
+                inGame = False
+        elif action == Action.MENU:
+            inGame = False
+        else:
+            if action == Action.BFS:
+                result = search.beginSearch(ALGORITHM.BFS)
+            elif action == Action.UCOST:
+                result = search.beginSearch(ALGORITHM.UCOST)
+            elif action == Action.GS1:
+                result = search.beginSearch(ALGORITHM.GS1)
+            elif action == Action.AS1:
+                    result = search.beginSearch(ALGORITHM.As1)
+            elif action == Action.AS2:
+                    result = search.beginSearch(ALGORITHM.As2)        
+            print(result)
+            if result == Action.LOST:
+                return game.gui.drawFinalMsg("You lose!")
+            else: 
+                action = game.gui.showResult(game.getSize(), game.getPieces(), result)
+                if action == Action.MENU:
+                    inGame = False
+                elif action == Action.START:
+                    game = initial_game
+                    continue
+    return Action.MENU
+
 
 def rules(game):
     return game.gui.rules()
