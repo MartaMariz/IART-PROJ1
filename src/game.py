@@ -27,6 +27,9 @@ class GameState:
     def getSize(self):
             return self.__size
 
+    def restartSnake(self):
+            self.snake.restartSnake()
+
     def setPieces(self, pieces):
 
         positions = []

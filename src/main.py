@@ -70,18 +70,16 @@ def puzzle(game, search):
 
 def playGame(game):
     inGame = True
-    initial_game = game
     while(inGame):
         search = Search(game)
         action = puzzleMenu(game)
         if action == Action.START:
-            endGame = puzzle(game, search)
-            if endGame == Action.QUIT:
-                return Action.QUIT
-            elif endGame == Action.MENU:
-                inGame = False
+            action = puzzle(game, search)
         elif action == Action.MENU:
-            inGame = False
+            return Action.MENU
+        elif action == Action.QUIT:
+            return Action.QUIT
+        
         else:
             if action == Action.BFS:
                 result = search.beginSearch(ALGORITHM.BFS)
@@ -95,15 +93,17 @@ def playGame(game):
                     result = search.beginSearch(ALGORITHM.As2)        
             print(result)
             if result == Action.LOST:
-                return game.gui.drawFinalMsg("You lose!")
+                action = game.gui.drawFinalMsg("You lose!")
             else: 
                 action = game.gui.showResult(game.getSize(), game.getPieces(), result)
-                if action == Action.MENU:
-                    inGame = False
-                elif action == Action.START:
-                    game = initial_game
-                    continue
-    return Action.MENU
+        if action == Action.MENU:
+            return Action.MENU
+        elif action == Action.START:
+            game.restartSnake()
+            print("hello")
+            continue
+        elif action == Action.QUIT:
+            return Action.QUIT
 
 
 def rules(game):
