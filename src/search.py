@@ -6,23 +6,18 @@ import shutil
 path = "./src"
   
 
-
-
-
 class Search:
     def __init__(self, game):
         self.__tree = np.array([ game.getSnake() ]) 
         self.__game = game
     
     def beginSearch(self, alg):
-        print(alg)
         i = 0
         start = time.time()
         
 
         while (1):
             if len(self.__tree) == 0:
-                print("tree 0")
                 return Action.LOST
 
             if (alg == ALGORITHM.BFS):
@@ -41,7 +36,6 @@ class Search:
 
             if ( curr_snake.endGame()):
                 if (self.__game.countAttacks(curr_snake)): 
-                    print("Solution found!!")
                     break
                 else:
                     continue

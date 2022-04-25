@@ -34,6 +34,9 @@ class GameState:
     def getSize(self):
             return self.__size
 
+    def restartSnake(self):
+            self.snake.restartSnake()
+
     def setPieces(self, pieces):
         """ calls builds the pieces and saves them in a vector 
 

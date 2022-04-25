@@ -45,15 +45,13 @@ class Piece:
                     num += 1
         return num
 
-    
-
     def getPos(self):
         return [self._line,self._col]
     
     def getAttack(self):
-        return self._bitmap.copy()
-    
-                        
+        return self._bitmap
+   
+
     def diagonalAttack(self, positions):
         """Records in the piece's bitmap the slots the piece atacks with the the diagonal attack
 
@@ -146,9 +144,7 @@ class Piece:
             else: 
                 left = False
 
-
             i += 1
-
 
 
 class Tower(Piece):
@@ -211,7 +207,6 @@ class King(Piece):
                 self._bitmap[self._line + 1][self._col + 1] = 1
             if ( left):
                 self._bitmap[self._line + 1][self._col - 1] = 1
-
 
 
 class Horse(Piece):

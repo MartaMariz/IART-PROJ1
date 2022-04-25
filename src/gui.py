@@ -1,3 +1,4 @@
+from re import A
 from piece import Bishop, Tower, Queen, Horse, King
 from utils import Action
 import pygame
@@ -144,7 +145,6 @@ class GUI:
         return Action.MENU
         
     def puzzleMenu(self, size, pieces, snake):
-        print(pieces)
         inDisplay = True
         while inDisplay:
             for event in pygame.event.get():
@@ -211,12 +211,16 @@ class GUI:
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
                         inMsg = False
+                    if event.key == pygame.K_SPACE:
+                        return Action.START
 
             self._screen.fill(self.BG)
             font = pygame.font.Font("resources/Emulogic-zrEw.ttf", 26)
             #font1 = pygame.font.SysFont('comicsansms', 72)
             img = font.render(msg, True, self.MENU_FONT, self.MENU_BOX)
             self._screen.blit(img, (self.SCREENWIDTH/5-len(msg)/2, self.SCREENHEIGHT/3))
+            img = font.render("SPACE- Try Again", True, self.MENU_FONT, self.MENU_BOX)
+            self._screen.blit(img, (10, self.SCREENHEIGHT-self.COMMANDS+100))
             img = font.render("ESC- Main Menu", True, self.MENU_FONT, self.MENU_BOX)
             self._screen.blit(img, (10, self.SCREENHEIGHT-self.COMMANDS+150))
             pygame.display.update()

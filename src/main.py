@@ -5,7 +5,7 @@ import random
 
 def main():
     inGame = True
-    pieces = [['Q',0,0], ['T',1,4]]
+    pieces = []
     game = GameState(5, pieces)
 
     while(inGame):
@@ -15,41 +15,16 @@ def main():
             if choice == Action.SHOWH:
                 del game, pieces
                 pieces = prepare_game(6)
-                print(pieces)
                 game = GameState(6, pieces)
             elif choice == Action.SHOWE:
                 del game, pieces
                 pieces = prepare_game(5)
                 game = GameState(5, pieces)
-
-            search = Search(game)
-            action = puzzleMenu(game)
-            if action == Action.START:
-                endGame = puzzle(game, search)
-                if endGame == Action.QUIT:
-                    break
-                elif endGame == Action.MENU:
-                    continue
+            action = playGame(game)
+            if action == Action.QUIT:
+                break
             elif action == Action.MENU:
                 continue
-            else:
-                if action == Action.BFS:
-                    result = search.beginSearch(ALGORITHM.BFS)
-                elif action == Action.UCOST:
-                    result = search.beginSearch(ALGORITHM.UCOST)
-                elif action == Action.GS1:
-                    result = search.beginSearch(ALGORITHM.GS1)
-                elif action == Action.AS1:
-                     result = search.beginSearch(ALGORITHM.As1)
-                elif action == Action.AS2:
-                     result = search.beginSearch(ALGORITHM.As2)        
-                print(result)
-                if result == Action.LOST:
-                    return game.gui.drawFinalMsg("You lose!")
-                else: 
-                    action = game.gui.showResult(game.getSize(), game.getPieces(), result)
-                    if action == Action.MENU:
-                        continue
 
             
         elif choice == Action.RULES:
@@ -66,10 +41,8 @@ def puzzle(game, search):
         if game.snake.endGame():
             game.gui.drawBoard(game.getSize(), game.getPieces(), game.snake)
             if (game.countAttacks(game.snake)):
-                print("You win!")
                 return game.gui.drawFinalMsg("You win!")
             else:
-                print("You lose!")
                 return game.gui.drawFinalMsg("You lose!")
 
         pieces = game.checkPiecesNearby()
@@ -82,7 +55,6 @@ def puzzle(game, search):
             return Action.MENU
         elif nextAction == Action.AS1:
             result = search.beginSearch(ALGORITHM.As1)
-            print(result)
             if result == Action.LOST:
                 return game.gui.drawFinalMsg("You lose!")
             else: return game.gui.showResult(game.getSize(), game.getPieces(), result)
@@ -90,6 +62,43 @@ def puzzle(game, search):
         else:
             if (game.evalMove(nextAction, game.snake)):
                 game.snake.updateSnake(nextAction)
+
+
+def playGame(game):
+    inGame = True
+    while(inGame):
+        search = Search(game)
+        action = puzzleMenu(game)
+        if action == Action.START:
+            action = puzzle(game, search)
+        elif action == Action.MENU:
+            return Action.MENU
+        elif action == Action.QUIT:
+            return Action.QUIT
+        
+        else:
+            if action == Action.BFS:
+                result = search.beginSearch(ALGORITHM.BFS)
+            elif action == Action.UCOST:
+                result = search.beginSearch(ALGORITHM.UCOST)
+            elif action == Action.GS1:
+                result = search.beginSearch(ALGORITHM.GS1)
+            elif action == Action.AS1:
+                    result = search.beginSearch(ALGORITHM.As1)
+            elif action == Action.AS2:
+                    result = search.beginSearch(ALGORITHM.As2)        
+            if result == Action.LOST:
+                action = game.gui.drawFinalMsg("You lose!")
+            else: 
+                action = game.gui.showResult(game.getSize(), game.getPieces(), result)
+        if action == Action.MENU:
+            return Action.MENU
+        elif action == Action.START:
+            game.restartSnake()
+            continue
+        elif action == Action.QUIT:
+            return Action.QUIT
+
 
 def rules(game):
     return game.gui.rules()
@@ -127,14 +136,10 @@ def prepare_game(level):
 
     if level == 5:
         number_board = random.randint(1, 10)
-
     if level == 6:
         number_board = random.randint(11, 20)
 
-
     pieces = boards["board"+str(number_board)]
-
-    print(pieces)
 
     return pieces
 

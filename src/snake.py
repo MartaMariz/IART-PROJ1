@@ -32,6 +32,11 @@ class Snake:
 
     def isOcupied(self, l, c):
         return self.__bitmap[l][c]
+
+    def restartSnake(self):
+        self.__pos = [self.board_size-1, 0]
+        self.__bitmap = np.array([[0]*(self.board_size)]*(self.board_size))
+        self.__bitmap[self.__pos[0]][self.__pos[1]] = 1
       
     def up(self): 
         if self.__pos[0] <= 0: return 0
@@ -146,8 +151,6 @@ class Snake:
         new_snake.copy( self )
         new_snake.updateSnake(move)
        
-                    
-        #print(new_snake.getBitmap())
         return new_snake
 
     def endGame(self):
