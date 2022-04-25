@@ -1,2 +1,10 @@
-# IART-PROJ1
- 
+# CHESS SNAKE PUZZLES
+## IART-PROJ1 - 10.1B
+
+In order to play our version of Chess Snake Puzzles, it is needed to have Python 3 and Pygame installed. After having those technologies in your machine, follow these steps:
+
+<ol> 
+<li> In a command shell, go to the directory of this project</li>
+<li> Run python3 &lt;path to the project/src/main.py&gt; </li>
+<li> A new tab with the user interface of the game will open, and all the instructions you need to play it are in "Rules"</li>
+</ol>
