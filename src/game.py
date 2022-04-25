@@ -10,6 +10,12 @@ class GameState:
     __piece_list = []
 
     def __init__(self, size, pieces):
+        """ Build game set up 
+
+        Args:
+        size (int): size of board number of collumns is equal to number of lines
+        pieces (vector): specifies the piece type and its position in the board
+        """
         self.gui = GUI()
         self.__size = size
 
@@ -24,10 +30,16 @@ class GameState:
 
     def getPieces(self):
             return self.__piece_list
+
     def getSize(self):
             return self.__size
 
     def setPieces(self, pieces):
+        """ calls builds the pieces and saves them in a vector 
+
+        Args:
+        pieces (vector): string identifying  the piece type and ints identifying its position in the board
+        """
 
         positions = []
         self.__piece_list.clear()
@@ -50,9 +62,17 @@ class GameState:
         
         for piece in self.__piece_list:
                 piece.setAttack(positions)
-                #piece.printAttack()
         
     def evalMove(self, move, snake):
+        """ checks if the move chosen is valid, if the snake doesn't go to a slot occupied
+
+        Args:
+        move (Action): move chosen by the player
+        snake (Snake): snake object to evaluate
+
+        Returns:
+        int: 1 if the move is valid, 0 if it is not
+        """
         if (move == Action.DOWN):
             if (self.__board[snake.getLine()+1][snake.getCol()] == 0):
                 return 1
@@ -71,6 +91,11 @@ class GameState:
             return 0
         
     def checkPiecesNearby(self):
+        """ evaluates the possible moves of the snake taking account the position of the pieces in the board
+
+        Returns:
+        vector: vector with the possible actions for the snake
+        """
         vec = []
         if self.snake.getLine()+1 < self.__size:
                 if (self.__board[self.snake.getLine()+1][self.snake.getCol()] != 0):
@@ -87,6 +112,14 @@ class GameState:
         return vec
 
     def countAttacks(self, snake): 
+        """ checks if all the pieces have the same number of attacks therefor if the player won or lost the game
+
+        Args:
+        snake (Snake): snake to evaluate
+
+        Returns:
+        int: 1 if the player won, 0 if not
+        """
         snake_bitmap = snake.getBitmap()
         curr_num = self.__piece_list[0].AttackNum(snake_bitmap)
 
@@ -95,8 +128,16 @@ class GameState:
             if ( curr_num != num_attacks):
                     return 0
         return 1
-    
+
     def getAbsDifAttacks( self, snake):
+        """ Heuristics evaluating the difference of the number of times a piece attacks snake segments 
+
+        Args:
+        snake (Snake): snake to evaluate
+
+        Returns:
+        int: absolute of the difference between the number of attacks of the piece with the most attacks and the piece with least
+        """
         snake_bitmap = snake.getBitmap()
         if (self.__size == 5):
             return abs( self.__piece_list[0].AttackNum( snake_bitmap) - self.__piece_list[1].AttackNum( snake_bitmap) )

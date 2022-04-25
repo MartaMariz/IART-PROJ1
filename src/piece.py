@@ -9,14 +9,34 @@ class Piece:
     _bitmap = []
     
     def __init__(self, col, line, board_size):
+        """ Builds the piece 
+
+        Args:
+            col (int): piece's column in the board
+            line (int): piece's line in the board
+            board_size (int): size of the board, the number of collumns is equal to the number of lines
+        """
         self._col = col
         self._line = line
         self._board_size = board_size
     
     def setAttack(self, positions):
+        """ Builds the bitmap corresponding to the piece's attacks
+
+        Args:
+            positions (vector): vector with the positions of all the pieces in the board
+        """
         self._bitmap = np.array([[0]*(self._board_size)]*(self._board_size))
 
     def AttackNum(self, snake):
+        """Evaluates how many times the piece attacks a snake
+
+        Args:
+            snake (Snake): snake to evaluate
+
+        Returns:
+            int: number of times the piece attacks the snake
+        """
         num = 0
         
         for l in range (self._board_size):
@@ -31,16 +51,15 @@ class Piece:
         return [self._line,self._col]
     
     def getAttack(self):
-        return self._bitmap
+        return self._bitmap.copy()
     
-    #def printAttack(self):
-     #   print("attack")
-      #  print(self._bitmap)
-
-            
-            
-
+                        
     def diagonalAttack(self, positions):
+        """Records in the piece's bitmap the slots the piece atacks with the the diagonal attack
+
+        Args:
+            positions (vector): the positions of the pieces in the board, it will impact which pieces 
+        """
         xnyn = True
         xnyp = True
         xpyn = True
