@@ -95,7 +95,7 @@ class GameState:
             if ( curr_num != num_attacks):
                     return 0
         return 1
-
+    
     def getAbsDifAttacks( self, snake):
         snake_bitmap = snake.getBitmap()
         if (self.__size == 5):
