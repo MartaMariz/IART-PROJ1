@@ -8,10 +8,23 @@ path = "./src"
 
 class Search:
     def __init__(self, game):
+        """Prepares the necessary structures to perform the search
+
+        Args:
+            game (Game): game iniciated on main
+        """
         self.__tree = np.array([ game.getSnake() ]) 
         self.__game = game
     
     def beginSearch(self, alg):
+        """Executes the search
+
+        Args:
+            alg (ALGORITHM): specifies the algorithm that will be implemented
+
+        Returns:
+            Snake: the resulting snake
+        """
         i = 0
         start = time.time()
         
@@ -68,12 +81,22 @@ class Search:
         return curr_snake
 
     def bfs(self):
+        """Selects the next node to be explored according to the breadth first search algorithm
+
+        Returns:
+            Snake: new node which is the resulting snake
+        """
         curr_snake = self.__tree[0]
         self.__tree = np.delete(self.__tree,0)
 
         return curr_snake
     
     def ucost(self):
+        """Selects the next node to be explored according to the uniform cost algorithm
+
+        Returns:
+            Snake: new node which is the resulting snake
+        """
         index = 0
         minhc = self.__tree[0].getCost()
         for i in range (1,len(self.__tree)):
@@ -88,6 +111,11 @@ class Search:
         return curr_snake
     
     def greedy1(self):
+        """Selects the next node to be explored according to the greedy search algorithm with the manhatan distance to the end heuristic
+
+        Returns:
+            Snake: new node which is the resulting snake
+        """
         index = 0
         minhc = self.__tree[0].getDistancetoEnd()
         for i in range (1,len(self.__tree)):
@@ -103,6 +131,11 @@ class Search:
 
 
     def as1(self):
+        """Selects the next node to be explored according to the A* algorithm with the manhatan distance to the end heuristic
+
+        Returns:
+            Snake: new node which is the resulting snake
+        """
         index = 0
         minhc = self.__tree[0].getDistancetoEnd() + self.__tree[0].getCost()
         for i in range (1,len(self.__tree)):
@@ -117,6 +150,12 @@ class Search:
         return curr_snake
 
     def as2(self):
+        """Selects the next node to be explored according to the A* algorithm with absolute of the difference between the number of attacks heuristic
+
+        Returns:
+            Snake: new node which is the resulting snake
+        """
+        
         index = 0
         minhc = self.__game.getAbsDifAttacks(self.__tree[0]) + self.__tree[0].getCost()
         for i in range (1,len(self.__tree)):

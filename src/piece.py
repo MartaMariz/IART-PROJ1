@@ -56,7 +56,7 @@ class Piece:
         """Records in the piece's bitmap the slots the piece atacks with the the diagonal attack
 
         Args:
-            positions (vector): the positions of the pieces in the board, it will impact which pieces 
+            positions (vector): the positions of the pieces in the board
         """
         xnyn = True
         xnyp = True
@@ -103,7 +103,11 @@ class Piece:
             i += 1
 
     def orthogonalAttack(self, positions):
+        """Records in the piece's bitmap the slots the piece atacks with the the orthogonal attack
 
+        Args:
+            positions (vector): the positions of the pieces in the board
+        """
         up = True 
         down = True
         left = True
@@ -177,6 +181,11 @@ class King(Piece):
         super().__init__(col, line, board_size)
 
     def setAttack(self, positions):
+        """Records in the piece's bitmap the slots the piece atacks with the the King attack
+
+        Args:
+            positions (vector): the positions of the pieces in the board
+        """
         super().setAttack( positions)
 
         up = False
@@ -214,6 +223,11 @@ class Horse(Piece):
         super().__init__(col, line, board_size)
     
     def setAttack(self, positions):
+        """Records in the piece's bitmap the slots the piece atacks with the the horse attack
+
+        Args:
+            positions (vector): the positions of the pieces in the board
+        """
         super().setAttack(positions)
 
         l = self._line
