@@ -53,7 +53,6 @@ class GameState:
         
         for piece in self.__piece_list:
                 piece.setAttack(positions)
-                #piece.printAttack()
         
     def evalMove(self, move, snake):
         if (move == Action.DOWN):

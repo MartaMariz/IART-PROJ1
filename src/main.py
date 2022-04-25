@@ -5,7 +5,7 @@ import random
 
 def main():
     inGame = True
-    pieces = [['Q',0,0], ['T',1,4]]
+    pieces = []
     game = GameState(5, pieces)
 
     while(inGame):
@@ -15,7 +15,6 @@ def main():
             if choice == Action.SHOWH:
                 del game, pieces
                 pieces = prepare_game(6)
-                print(pieces)
                 game = GameState(6, pieces)
             elif choice == Action.SHOWE:
                 del game, pieces
@@ -42,10 +41,8 @@ def puzzle(game, search):
         if game.snake.endGame():
             game.gui.drawBoard(game.getSize(), game.getPieces(), game.snake)
             if (game.countAttacks(game.snake)):
-                print("You win!")
                 return game.gui.drawFinalMsg("You win!")
             else:
-                print("You lose!")
                 return game.gui.drawFinalMsg("You lose!")
 
         pieces = game.checkPiecesNearby()
@@ -58,7 +55,6 @@ def puzzle(game, search):
             return Action.MENU
         elif nextAction == Action.AS1:
             result = search.beginSearch(ALGORITHM.As1)
-            print(result)
             if result == Action.LOST:
                 return game.gui.drawFinalMsg("You lose!")
             else: return game.gui.showResult(game.getSize(), game.getPieces(), result)
@@ -91,7 +87,6 @@ def playGame(game):
                     result = search.beginSearch(ALGORITHM.As1)
             elif action == Action.AS2:
                     result = search.beginSearch(ALGORITHM.As2)        
-            print(result)
             if result == Action.LOST:
                 action = game.gui.drawFinalMsg("You lose!")
             else: 
@@ -100,7 +95,6 @@ def playGame(game):
             return Action.MENU
         elif action == Action.START:
             game.restartSnake()
-            print("hello")
             continue
         elif action == Action.QUIT:
             return Action.QUIT
@@ -142,16 +136,10 @@ def prepare_game(level):
 
     if level == 5:
         number_board = random.randint(1, 10)
-        pieces = boards["board"+str(5)]
-
     if level == 6:
         number_board = random.randint(11, 20)
-        pieces = boards["board"+str(15)]
 
-
-    #pieces = boards["board"+str(number_board)]
-
-    print(pieces)
+    pieces = boards["board"+str(number_board)]
 
     return pieces
 

@@ -25,20 +25,12 @@ class Piece:
                     num += 1
         return num
 
-    
-
     def getPos(self):
         return [self._line,self._col]
     
     def getAttack(self):
         return self._bitmap
-    
-    #def printAttack(self):
-     #   print("attack")
-      #  print(self._bitmap)
-
-            
-            
+   
 
     def diagonalAttack(self, positions):
         xnyn = True
@@ -127,9 +119,7 @@ class Piece:
             else: 
                 left = False
 
-
             i += 1
-
 
 
 class Tower(Piece):
@@ -192,7 +182,6 @@ class King(Piece):
                 self._bitmap[self._line + 1][self._col + 1] = 1
             if ( left):
                 self._bitmap[self._line + 1][self._col - 1] = 1
-
 
 
 class Horse(Piece):

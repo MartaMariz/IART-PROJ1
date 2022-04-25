@@ -145,7 +145,6 @@ class GUI:
         return Action.MENU
         
     def puzzleMenu(self, size, pieces, snake):
-        print(pieces)
         inDisplay = True
         while inDisplay:
             for event in pygame.event.get():
