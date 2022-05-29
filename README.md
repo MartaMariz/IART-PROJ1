@@ -8,3 +8,8 @@ In order to play our version of Chess Snake Puzzles, it is needed to have Python
 <li> Run python3 &lt;path to the project/src/main.py&gt; </li>
 <li> A new tab with the user interface of the game will open, and all the instructions you need to play it are in "Rules"</li>
 </ol>
+
+Developed by:
+- Carolina Cintra @caroucintra
+- Marta Mariz @MartaMariz
+- Sara Sá @SaraRaquelSa
