@@ -10,6 +10,6 @@ In order to play our version of Chess Snake Puzzles, it is needed to have Python
 </ol>
 
 Developed by:
-- Carolina Cintra @caroucintra
-- Marta Mariz @MartaMariz
-- Sara Sá @SaraRaquelSa
+- Carolina Cintra [@caroucintra](https://github.com/caroucintra)
+- Marta Mariz [@MartaMariz](https://github.com/MartaMariz)
+- Sara Sá [@SaraRaquelSa](https://github.com/SaraRaquelSa)
